@@ -8,7 +8,7 @@
 
 import UIKit
 
-class vcSettings: UIViewController {
+class vcSettings: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -12,12 +12,15 @@ class vcRead: UIViewController {
     
     @IBOutlet weak var vRead    : UIView!
     @IBOutlet weak var vWrite   : UIView!
+    @IBOutlet weak var lcOffsetX: NSLayoutConstraint!
+    @IBOutlet weak var tfIntention  : UITextField!
     var vCurrent    : UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(switchView)))
-        self.vRead.frame.origin.x = 0
+        self.vWrite.addGestureRecognizer(UITapGestureRecognizer(target: self.tfIntention, action: #selector(resignFirstResponder)))
+        
         self.vCurrent = self.vRead
     }
     
@@ -41,8 +44,7 @@ class vcRead: UIViewController {
                 {left = -self.vRead.frame.width}
             if left > 0
                 {left = 0}
-            self.vRead.frame.origin.x = left
-            self.vWrite.frame.origin.x = left + self.vRead.frame.width
+            self.lcOffsetX.constant = left
         case .ended:
             switch self.vCurrent! {
             case self.vRead!:
@@ -65,18 +67,25 @@ class vcRead: UIViewController {
     
     private func switchToRead() {
         self.vCurrent = self.vRead
+        self.lcOffsetX.constant = 0
         UIView.animate(withDuration: TimeInterval(switchTime), animations: {
-            self.vRead.frame.origin.x = 0
-            self.vWrite.frame.origin.x = self.vRead.frame.width
+            self.view.layoutIfNeeded()
         })
     }
 
     private func switchToWrite() {
         self.vCurrent = self.vWrite
+        self.lcOffsetX.constant = -self.vRead.frame.width
         UIView.animate(withDuration: TimeInterval(switchTime), animations: {
-            self.vRead.frame.origin.x = -self.vRead.frame.width
-            self.vWrite.frame.origin.x = 0
+            self.view.layoutIfNeeded()
         })
     }
-
+    
+    @IBAction func sendIntention(_ sender: Any) {
+    }
+    
+    @IBAction func switchToSettings(_ sender: Any) {
+        self.performSegue(withIdentifier: "read_settings", sender: self)
+    }
+    
 }
