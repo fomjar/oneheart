@@ -10,11 +10,15 @@ import UIKit
 
 class vcRead: UIViewController {
     
+    @IBOutlet weak var vRead    : UIView!
+    @IBOutlet weak var vWrite   : UIView!
+    var vCurrent    : UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(switchView))
-        gesture.direction = .left
-        self.view.addGestureRecognizer(gesture)
+        self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(switchView)))
+        vWrite.frame.origin.x = UIScreen.main.bounds.width
+        self.switchToRead()
     }
     
     override func didReceiveMemoryWarning() {
@@ -22,11 +26,24 @@ class vcRead: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc private func switchView(gesture: UISwipeGestureRecognizer) {
-        self.performSegue(withIdentifier: "read_write", sender: self)
+    @objc private func switchView(gesture: UIPanGestureRecognizer) {
+        let p = gesture.translation(in: self.view)
+        switch gesture.state {
+        case .changed:
+            print()
+        case .ended:
+            print()
+        default:
+            print()
+        }
     }
     
-    @IBAction func unwindView(segue: UIStoryboardSegue) {
+    private func switchToRead() {
+        
+    }
+
+    private func switchToWrite() {
+        
     }
 
 }

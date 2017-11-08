@@ -24,6 +24,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="HIR-w6-Ycx"/>
                                 </constraints>
                                 <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBr-6d-YLo">
@@ -90,34 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Chg-Sr-Deq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3202" y="-30"/>
-        </scene>
-        <!--Vc Write-->
-        <scene sceneID="I2M-60-vAM">
-            <objects>
-                <viewController id="cYr-zx-uPH" customClass="vcWrite" customModule="OneHeart" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="H5b-w0-9ri">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="发送心愿" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vZ5-gP-161">
-                                <rect key="frame" x="139" y="318" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="fZz-6S-OM7"/>
-                    </view>
-                    <connections>
-                        <segue destination="aJ4-XS-Okf" kind="presentation" identifier="write_settings" id="jHw-P0-46R"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qQO-kv-3Qt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2162" y="948"/>
+            <point key="canvasLocation" x="2289" y="948"/>
         </scene>
         <!--Vc Read-->
         <scene sceneID="Tc3-EK-RYS">
@@ -127,26 +101,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GLM-Qu-Brn">
-                                <rect key="frame" x="67" y="263.5" width="240" height="140"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IkA-qP-pWK" userLabel="read">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字一段文字" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GLM-Qu-Brn">
+                                        <rect key="frame" x="67.5" y="253.5" width="240" height="140"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="JA4-gH-4uz"/>
+                                            <constraint firstAttribute="width" constant="240" id="inF-lt-dWY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="JA4-gH-4uz"/>
-                                    <constraint firstAttribute="width" constant="240" id="inF-lt-dWY"/>
+                                    <constraint firstItem="GLM-Qu-Brn" firstAttribute="centerY" secondItem="IkA-qP-pWK" secondAttribute="centerY" id="8AL-Lj-gws"/>
+                                    <constraint firstItem="GLM-Qu-Brn" firstAttribute="centerX" secondItem="IkA-qP-pWK" secondAttribute="centerX" id="A7d-py-ObN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <viewLayoutGuide key="safeArea" id="afm-Sz-fS8"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AUK-Dk-wbJ" userLabel="write">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="GLM-Qu-Brn" firstAttribute="centerX" secondItem="yXE-Te-pfm" secondAttribute="centerX" id="5ds-jm-tnJ"/>
-                            <constraint firstItem="GLM-Qu-Brn" firstAttribute="centerY" secondItem="yXE-Te-pfm" secondAttribute="centerY" id="sX1-61-JrD"/>
+                            <constraint firstItem="IkA-qP-pWK" firstAttribute="leading" secondItem="QxI-5N-iJn" secondAttribute="leading" id="3zg-0g-BbD"/>
+                            <constraint firstItem="QxI-5N-iJn" firstAttribute="trailing" secondItem="AUK-Dk-wbJ" secondAttribute="trailing" id="BeH-gV-0sg"/>
+                            <constraint firstItem="AUK-Dk-wbJ" firstAttribute="top" secondItem="QxI-5N-iJn" secondAttribute="top" id="LdP-Ak-Frh"/>
+                            <constraint firstItem="QxI-5N-iJn" firstAttribute="bottom" secondItem="AUK-Dk-wbJ" secondAttribute="bottom" id="Mae-Rv-psp"/>
+                            <constraint firstItem="QxI-5N-iJn" firstAttribute="bottom" secondItem="IkA-qP-pWK" secondAttribute="bottom" id="Sgr-Eb-fIq"/>
+                            <constraint firstItem="IkA-qP-pWK" firstAttribute="top" secondItem="QxI-5N-iJn" secondAttribute="top" id="c9D-DG-EmV"/>
+                            <constraint firstItem="AUK-Dk-wbJ" firstAttribute="leading" secondItem="QxI-5N-iJn" secondAttribute="leading" id="h5o-Eg-3b7"/>
+                            <constraint firstItem="QxI-5N-iJn" firstAttribute="trailing" secondItem="IkA-qP-pWK" secondAttribute="trailing" id="tvZ-ez-xY1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QxI-5N-iJn"/>
                     </view>
                     <connections>
-                        <segue destination="cYr-zx-uPH" kind="presentation" identifier="read_write" modalTransitionStyle="flipHorizontal" id="nrn-vX-XqR"/>
+                        <outlet property="vRead" destination="IkA-qP-pWK" id="ja7-pX-vDE"/>
+                        <outlet property="vWrite" destination="AUK-Dk-wbJ" id="1wq-jf-ATm"/>
                         <segue destination="aJ4-XS-Okf" kind="presentation" identifier="read_settings" id="lCc-yN-vkY"/>
                     </connections>
                 </viewController>
@@ -204,6 +200,5 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Bg9-ie-D6L"/>
-        <segue reference="jHw-P0-46R"/>
     </inferredMetricsTieBreakers>
 </document>
