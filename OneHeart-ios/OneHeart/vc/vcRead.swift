@@ -17,8 +17,8 @@ class vcRead: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(switchView)))
-        vWrite.frame.origin.x = UIScreen.main.bounds.width
-        self.switchToRead()
+        self.vRead.frame.origin.x = 0
+        self.vCurrent = self.vRead
     }
     
     override func didReceiveMemoryWarning() {
@@ -26,24 +26,57 @@ class vcRead: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    var panBegan    : CGFloat?
+    var switchValue = CGFloat(8)
+    var switchTime  = Double(0.4)
+    
     @objc private func switchView(gesture: UIPanGestureRecognizer) {
         let p = gesture.translation(in: self.view)
         switch gesture.state {
+        case .began:
+            self.panBegan = self.vRead.frame.origin.x
         case .changed:
-            print()
+            var left = self.panBegan! + p.x
+            if left < -self.vRead.frame.width
+                {left = -self.vRead.frame.width}
+            if left > 0
+                {left = 0}
+            self.vRead.frame.origin.x = left
+            self.vWrite.frame.origin.x = left + self.vRead.frame.width
         case .ended:
-            print()
+            switch self.vCurrent! {
+            case self.vRead!:
+                if -self.vRead.frame.origin.x * self.switchValue > self.vRead.frame.width
+                    {self.switchToWrite()}
+                else
+                    {self.switchToRead()}
+            case self.vWrite!:
+                if -self.vRead.frame.origin.x / (self.switchValue - 1) * self.switchValue < self.vRead.frame.width
+                    {self.switchToRead()}
+                else
+                    {self.switchToWrite()}
+            default:
+                print()
+            }
         default:
             print()
         }
     }
     
     private func switchToRead() {
-        
+        self.vCurrent = self.vRead
+        UIView.animate(withDuration: TimeInterval(switchTime), animations: {
+            self.vRead.frame.origin.x = 0
+            self.vWrite.frame.origin.x = self.vRead.frame.width
+        })
     }
 
     private func switchToWrite() {
-        
+        self.vCurrent = self.vWrite
+        UIView.animate(withDuration: TimeInterval(switchTime), animations: {
+            self.vRead.frame.origin.x = -self.vRead.frame.width
+            self.vWrite.frame.origin.x = 0
+        })
     }
 
 }
