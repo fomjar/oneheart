@@ -8,13 +8,14 @@
 
 import UIKit
 
-class vcRead: UIViewController {
+class ReadController: UIViewController {
     
     @IBOutlet weak var vRead    : UIView!
     @IBOutlet weak var vWrite   : UIView!
     @IBOutlet weak var lcOffsetX: NSLayoutConstraint!
     @IBOutlet weak var tfIntention  : UITextField!
     var vCurrent    : UIView?
+    var isSignedIn  = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +23,19 @@ class vcRead: UIViewController {
         self.vWrite.addGestureRecognizer(UITapGestureRecognizer(target: self.tfIntention, action: #selector(resignFirstResponder)))
         
         self.vCurrent = self.vRead
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !isSignedIn {
+            isSignedIn = true
+            self.performSegue(withIdentifier: "read_sign", sender: self)
+        }
     }
     
     var panBegan    : CGFloat?
@@ -68,17 +77,17 @@ class vcRead: UIViewController {
     private func switchToRead() {
         self.vCurrent = self.vRead
         self.lcOffsetX.constant = 0
-        UIView.animate(withDuration: TimeInterval(switchTime), animations: {
+        UIView.animate(withDuration: TimeInterval(switchTime)) {
             self.view.layoutIfNeeded()
-        })
+        }
     }
 
     private func switchToWrite() {
         self.vCurrent = self.vWrite
         self.lcOffsetX.constant = -self.vRead.frame.width
-        UIView.animate(withDuration: TimeInterval(switchTime), animations: {
+        UIView.animate(withDuration: TimeInterval(switchTime)) {
             self.view.layoutIfNeeded()
-        })
+        }
     }
     
     @IBAction func sendIntention(_ sender: Any) {

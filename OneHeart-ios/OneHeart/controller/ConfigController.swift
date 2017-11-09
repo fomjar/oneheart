@@ -8,7 +8,7 @@
 
 import UIKit
 
-class vcSettings: UITableViewController {
+class ConfigController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +18,6 @@ class vcSettings: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
     }
     
 }

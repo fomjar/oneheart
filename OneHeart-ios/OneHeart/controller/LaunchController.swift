@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  vcLaunch.swift
 //  OneHeart
 //
 //  Created by fomjar on 2017/11/7.
@@ -8,24 +8,20 @@
 
 import UIKit
 
-class vcLogin: UIViewController {
-
+class LaunchController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        Timer.scheduledTimer(withTimeInterval: TimeInterval(3), repeats: false) {_ in
+            self.performSegue(withIdentifier: "launch_read", sender: self)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet weak var btnLogin: UIButton!
-    @IBAction func login(_ sender: Any) {
-        Timer.scheduledTimer(withTimeInterval: TimeInterval(1), repeats: false, block: {_ in
-            self.performSegue(withIdentifier: "login_read", sender: self)
-        })
-    }
-    
 }
-
