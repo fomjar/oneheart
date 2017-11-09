@@ -82,10 +82,10 @@ class vcRead: UIViewController {
     }
     
     @IBAction func sendIntention(_ sender: Any) {
-    }
-    
-    @IBAction func switchToSettings(_ sender: Any) {
-        self.performSegue(withIdentifier: "read_settings", sender: self)
+        Net("/config/get")
+        .jsonBody(key: "keys", val: [])
+        .post {(code, desc, data) in
+        }
     }
     
 }

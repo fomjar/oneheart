@@ -137,7 +137,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkQ-Zt-PdM" userLabel="btnSettings">
                                 <rect key="frame" x="338" y="30" width="22" height="22"/>
                                 <connections>
-                                    <action selector="switchToSettings:" destination="kfC-BA-N4O" eventType="touchUpInside" id="aZk-VD-qI3"/>
+                                    <segue destination="ByH-4G-Td2" kind="presentation" id="ENy-O0-fNB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -161,7 +161,6 @@
                         <outlet property="tfIntention" destination="mgt-WW-t8a" id="SbE-36-SWc"/>
                         <outlet property="vRead" destination="IkA-qP-pWK" id="ja7-pX-vDE"/>
                         <outlet property="vWrite" destination="AUK-Dk-wbJ" id="1wq-jf-ATm"/>
-                        <segue destination="ByH-4G-Td2" kind="presentation" identifier="read_settings" id="0QN-hD-bHc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PvG-kB-ZjC" userLabel="First Responder" sceneMemberID="firstResponder"/>
