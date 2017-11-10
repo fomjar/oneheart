@@ -20,7 +20,7 @@ public class UserController implements BasicController {
     String signup(@RequestBody Map<String, Object> data) {
         argsOptimize(data);
         if (!argsMatched(data, "mail", "pass"))     return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
-        if (service.checkMail(data.get("mail")))    return jsonObject().code(Code.EXISTING_MAIL).toString();
+        if (!service.checkMail(data.get("mail")))   return jsonObject().code(Code.EXISTING_MAIL).toString();
         
         return jsonObject().code(Code.SUCCESS).put(service.signup(data)).toString();
     }

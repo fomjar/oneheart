@@ -14,7 +14,7 @@ class LaunchController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        Timer.scheduledTimer(withTimeInterval: TimeInterval(3), repeats: false) {_ in
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {_ in
             self.performSegue(withIdentifier: "launch_read", sender: self)
         }
     }

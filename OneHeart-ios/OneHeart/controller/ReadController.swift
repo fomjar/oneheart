@@ -15,15 +15,12 @@ class ReadController: UIViewController {
     @IBOutlet weak var lcOffsetX: NSLayoutConstraint!
     @IBOutlet weak var tfIntention  : UITextField!
     var vCurrent    : UIView?
-    var isSignedIn  = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(switchView)))
-        self.vWrite.addGestureRecognizer(UITapGestureRecognizer(target: self.tfIntention, action: #selector(resignFirstResponder)))
         
         self.vCurrent = self.vRead
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,12 +29,15 @@ class ReadController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if !isSignedIn {
-            isSignedIn = true
+        if !Model.user.valid() {
             self.performSegue(withIdentifier: "read_sign", sender: self)
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.tfIntention.resignFirstResponder()
+    }
+
     var panBegan    : CGFloat?
     var switchValue = CGFloat(8)
     var switchTime  = Double(0.4)
@@ -77,7 +77,7 @@ class ReadController: UIViewController {
     private func switchToRead() {
         self.vCurrent = self.vRead
         self.lcOffsetX.constant = 0
-        UIView.animate(withDuration: TimeInterval(switchTime)) {
+        UIView.animate(withDuration: switchTime) {
             self.view.layoutIfNeeded()
         }
     }
@@ -85,15 +85,15 @@ class ReadController: UIViewController {
     private func switchToWrite() {
         self.vCurrent = self.vWrite
         self.lcOffsetX.constant = -self.vRead.frame.width
-        UIView.animate(withDuration: TimeInterval(switchTime)) {
+        UIView.animate(withDuration: switchTime) {
             self.view.layoutIfNeeded()
         }
     }
     
     @IBAction func sendIntention(_ sender: Any) {
-        Net("/config/get")
-        .jsonBody(key: "keys", val: [])
-        .post {(code, desc, data) in
+        Fnet.post(path: "/config/get", jsonParam: ["keys":[]]) {
+            (code, desc, data) in
+            
         }
     }
     

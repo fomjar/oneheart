@@ -20,4 +20,13 @@ class ConfigController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func navDone(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func signOut(_ sender: Any) {
+        Model.user.id = 0
+        Model.user.save()
+        self.dismiss(animated: true, completion: nil)
+    }
 }

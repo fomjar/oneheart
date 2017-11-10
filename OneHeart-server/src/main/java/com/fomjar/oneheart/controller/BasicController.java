@@ -196,10 +196,11 @@ public interface BasicController {
         
         /********************** 认证部分 **********************/
         EXISTING_MAIL           (0x00001001, "邮箱已存在"),
-        SIGNIN_FAILED           (0x00001002, "账号或密码错误"),
+        EXISTING_NAME           (0x00001002, "姓名已存在"),
+        EXISTING_PHONE          (0x00001003, "手机号已存在"),
+        SIGNIN_FAILED           (0x00001101, "账号或密码错误"),
         /********************** 系统错误 **********************/
         SUCCESS                 (0x00000000, "成功"),
-        SYS_PONG                (0x00000001, "pong"),
         SYS_ILLEGAL_ACCESS      (0xff000001, "非法访问"),
         SYS_ILLEGAL_RESOURCE    (0xff000002, "非法资源"),
         SYS_ILLEGAL_ARGUMENT    (0xff000003, "非法参数"),
