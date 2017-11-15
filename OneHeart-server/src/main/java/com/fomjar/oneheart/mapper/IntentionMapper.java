@@ -1,6 +1,6 @@
 package com.fomjar.oneheart.mapper;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,26 +19,37 @@ public interface IntentionMapper {
         @Override
         public String table() {return "t_intention";}
         
-        public String selectToday(Map<String, Object> cond) {
-            Map<String, Object> clone = new LinkedHashMap<>(cond);
-            clone.remove("page_from");
-            clone.remove("page_size");
-            
-            SQL sql = sqlSelect(clone);
-            if (!clone.isEmpty()) sql.AND();
+        public String selectDidReceive(int receiver) {
+            SQL sql = sqlSelect(new HashMap<>());
+            sql.AND();
+            sql.WHERE("`receiver` = #{receiver}");
+            sql.AND();
             sql.WHERE("to_days(`update`) = to_days(now())");
+            sql.ORDER_BY("`update` desc");
             
-            return sql.toString() + String.format(" LIMIT %d, %d",
-                            cond.containsKey("page_from") ? cond.get("page_from") : 0,
-                            cond.containsKey("page_size") ? cond.get("page_size") : 20);
+            return sql.toString();
+        }
+        
+        public String selectWillReceive(int receiver) {
+            SQL sql = sqlSelect(new HashMap<>());
+            sql.AND();
+            sql.WHERE("`receiver` is null");
+            sql.AND();
+            sql.WHERE("`sender` != #{receiver}");
+            sql.ORDER_BY("`update` desc");
+            
+            return sql.toString() + " LIMIT 0, 1";
         }
     }
     
     @SelectProvider(type = Provider.class, method = "select")
     List<Map<String, Object>> select(Map<String, Object> cond);
     
-    @SelectProvider(type = Provider.class, method = "selectToday")
-    List<Map<String, Object>> selectToday(Map<String, Object> cond);
+    @SelectProvider(type = Provider.class, method = "selectDidReceive")
+    List<Map<String, Object>> selectDidReceive(int receiver);
+    
+    @SelectProvider(type = Provider.class, method = "selectWillReceive")
+    List<Map<String, Object>> selectWillReceive(int receiver);
     
     @UpdateProvider(type = Provider.class, method = "update")
     int update(Map<String, Object> cond, Map<String, Object> data);

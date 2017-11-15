@@ -18,10 +18,10 @@ public class IntentionService extends BasicService {
     private UserService user;
     
     public synchronized List<Map<String, Object>> read(int uid) {
-        List<Map<String, Object>> list = mapper.selectToday(easyMap().put("receiver", uid).get());
+        List<Map<String, Object>> list = mapper.selectDidReceive(uid);
         
         if (list.isEmpty()) {
-            list = mapper.select(easyMap().put("receiver", null).get());
+            list = mapper.selectWillReceive(uid);
             if (!list.isEmpty()) {
                 Map<String, Object> map = list.get(0);
                 mapper.update(easyMap().put("id", map.get("id")).get(), easyMap().put("receiver", uid).get());

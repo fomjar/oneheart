@@ -91,9 +91,24 @@ class ReadController: UIViewController {
     }
     
     @IBAction func sendIntention(_ sender: Any) {
-        Fnet.post(path: "/config/get", jsonParam: ["keys":[]]) {
+        if Model.isUserWriteToday() {
+            return
+        }
+        
+        let intention = self.tfIntention.text!
+        
+        Fnet.post(path: "/intention/write", jsonParam: [
+            "uid"       : Model.user.id,
+            "intention" : intention
+        ]) {
             (code, desc, data) in
-            
+            switch Code(rawValue: code)! {
+            case Code.success:
+                self.tfIntention.text = ""
+                Model.notifyUserWrite()
+            default:
+                print()
+            }
         }
     }
     

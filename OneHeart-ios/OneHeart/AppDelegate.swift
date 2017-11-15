@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Fnet.server(host: "192.168.10.79", port: 8081)
+        Fnet.server(host: "api.oneheart.fomjar.com")
+//        Fnet.server(host: "192.168.10.79", port: 8082)
         return true
     }
 

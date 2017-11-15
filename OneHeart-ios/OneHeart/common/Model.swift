@@ -89,6 +89,15 @@ struct User: Storable {
 
 class Model {
     static var user     = User()
+    class func isUserWriteToday() -> Bool {
+        let user = Model.user.id!
+        let time = UserDefaults.standard.double(forKey: "user-\(user).write.time")
+        return Int(time / 60 / 60 / 24) >= Int(Date().timeIntervalSince1970 / 60 / 60 / 24)
+    }
+    class func notifyUserWrite() {
+        let user = Model.user.id!
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "user-\(user).write.time")
+    }
 }
 
 
