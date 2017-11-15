@@ -34,4 +34,13 @@ public class UserService extends BasicService {
         return list.isEmpty() ? null : list.get(0);
     }
     
+    public List<Map<String, Object>> get(Map<String, Object> cond) {
+        return mapper.select(cond);
+    }
+    
+    public Map<String, Object> get(int id) {
+        List<Map<String, Object>> list = get(easyMap().put("id", id).get());
+        return list.isEmpty() ? null : list.get(0);
+    }
+    
 }

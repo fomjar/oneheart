@@ -57,7 +57,8 @@ public interface BasicProvider {
             WHERE("`invalid` = 0");
             cond.forEach((key, val) -> {
                 AND();
-                WHERE(String.format("`%s` = #{%s}", key, key));
+                if (null == val)    WHERE(String.format("`%s` is null", key));
+                else                WHERE(String.format("`%s` = #{%s}", key, key));
             });
         }};
     }
@@ -70,7 +71,8 @@ public interface BasicProvider {
             WHERE("1 = 1");
             cond.forEach((key, val) -> {
                 AND();
-                WHERE(String.format("`%s` = #{arg0.%s}", key, key));
+                if (null == val)    WHERE(String.format("`%s` is null", key));
+                else                WHERE(String.format("`%s` = #{arg0.%s}", key, key));
             });
         }};
     }
@@ -82,7 +84,8 @@ public interface BasicProvider {
             WHERE("1 = 1");
             cond.forEach((key, val) -> {
                 AND();
-                WHERE(String.format("`%s` = #{%s}", key, key));
+                if (null == val)    WHERE(String.format("`%s` is null", key));
+                else                WHERE(String.format("`%s` = #{%s}", key, key));
             });
         }};
     }
