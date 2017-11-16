@@ -8,32 +8,32 @@
 
 import Foundation
 
-class Fnet {
+public class Fnet {
     
-    static var server = "http://127.0.0.1:80"
+    private static var server = "http://127.0.0.1:80"
     
-    class func server(host: String, port: Int = 80, https: Bool = false) {
+    public class func server(host: String, port: Int = 80, https: Bool = false) {
         Fnet.server = "http\(https ? "s" : "")://\(host):\(port)"
     }
     
-    class func get(path: String, headParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)?) {
+    public class func get(path: String, headParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
         Fnet.send(method: "GET", url: Fnet.server + path, headParam: headParam, done: done)
     }
     
-    class func post(path: String, headParam: [String:String] = [:], bodyParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)?) {
+    public class func post(path: String, headParam: [String:String] = [:], bodyParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
         Fnet.send(method: "POST", url: Fnet.server + path, headParam: headParam, bodyParam: bodyParam, done: done)
     }
     
-    class func post(path: String, headParam: [String:String] = [:], jsonParam: [String:Any] = [:], done: ((Int, String, [String:Any]) -> Void)?) {
+    public class func post(path: String, headParam: [String:String] = [:], jsonParam: [String:Any] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
         Fnet.send(method: "POST", url: Fnet.server + path, headParam: headParam, jsonParam: jsonParam, done: done)
     }
 
-    class private func send(method      : String,
+    private class func send(method      : String,
                             url         : String,
                             headParam   : [String:String]   = [:],
                             bodyParam   : [String:String]   = [:],
                             jsonParam   : [String:Any]      = [:],
-                            done        : ((Int, String, [String:Any]) -> Void)?) {
+                            done        : ((Int, String, [String:Any]) -> Void)? = nil) {
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method

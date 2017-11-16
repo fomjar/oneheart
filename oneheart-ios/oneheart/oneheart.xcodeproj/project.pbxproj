@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526B8BF01FBD814D005CA7B2 /* Fui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B8BEF1FBD814D005CA7B2 /* Fui.swift */; };
 		52EAEDD41FBD73DA00B698BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEDD31FBD73DA00B698BA /* AppDelegate.swift */; };
 		52EAEDDB1FBD73DA00B698BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52EAEDDA1FBD73DA00B698BA /* Assets.xcassets */; };
 		52EAEE021FBD74E800B698BA /* ConfigController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEDFE1FBD74E700B698BA /* ConfigController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		526B8BEF1FBD814D005CA7B2 /* Fui.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fui.swift; sourceTree = "<group>"; };
 		52EAEDD01FBD73DA00B698BA /* oneheart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oneheart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52EAEDD31FBD73DA00B698BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52EAEDDA1FBD73DA00B698BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				52EAEE061FBD74F000B698BA /* Fnet.swift */,
+				526B8BEF1FBD814D005CA7B2 /* Fui.swift */,
 				52EAEE071FBD74F000B698BA /* Model.swift */,
 			);
 			path = common;
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526B8BF01FBD814D005CA7B2 /* Fui.swift in Sources */,
 				52EAEE091FBD74F000B698BA /* Model.swift in Sources */,
 				52EAEDD41FBD73DA00B698BA /* AppDelegate.swift in Sources */,
 				52EAEE051FBD74E800B698BA /* LaunchController.swift in Sources */,
