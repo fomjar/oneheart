@@ -1,6 +1,6 @@
 //
 //  Model.swift
-//  OneHeart
+//  oneheart
 //
 //  Created by fomjar on 2017/11/9.
 //  Copyright © 2017年 fomjar. All rights reserved.

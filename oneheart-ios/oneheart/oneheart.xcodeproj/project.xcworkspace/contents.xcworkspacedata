@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:OneHeart.xcodeproj">
+      location = "self:oneheart.xcodeproj">
    </FileRef>
 </Workspace>
