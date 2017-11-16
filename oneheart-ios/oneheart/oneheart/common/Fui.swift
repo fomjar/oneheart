@@ -69,8 +69,8 @@ public class Fui {
             case ActivityIndicator
         }
         
-        private var fmask   : Fmask!
-        private var vAI     : UIActivityIndicatorView?
+        private var fmask       : Fmask!
+        private var indicator   : UIView!
         
         required public init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
         
@@ -78,22 +78,24 @@ public class Fui {
             super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             
             self.fmask = Fmask(opacity: 0.1)
+            self.indicator = UIView()
             
             self.addSubview(self.fmask)
+            self.addSubview(self.indicator)
             
             self.applyType(type)
         }
         
         private func applyType(_ type: HUDtype) {
-            CGRect screen = UIScreen.main.bounds
+            let screen = UIScreen.main.bounds
             
             switch type {
             case .ActivityIndicator:
-                vAI = vAI ?? UIActivityIndicatorView(activityIndicatorStyle: .white)
-                self.layer.cornerRadius     = 8
-                self.layer.masksToBounds    = true
-            default:
-                print()
+                let size = CGFloat(20)
+                self.indicator.frame = CGRect(x: (screen.width - size) / 2, y: (screen.height - size) / 2, width: size, height: size)
+                self.indicator.layer.backgroundColor    = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+                self.indicator.layer.cornerRadius       = 8
+                self.indicator.layer.masksToBounds      = true
             }
         }
     }
