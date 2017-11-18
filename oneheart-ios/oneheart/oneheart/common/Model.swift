@@ -8,21 +8,6 @@
 
 import Foundation
 
-enum Code: Int {
-    case existing_mail      = 0x00001001
-    case existing_name      = 0x00001002
-    case existing_phone     = 0x00001003
-    
-    case signin_failed      = 0x00001101
-    
-    case success                = 0x00000000
-    case sys_illegal_access     = 0xff000001
-    case sys_illegal_resource   = 0xff000002
-    case sys_illegal_argument   = 0xff000003
-    case sys_illegal_message    = 0xff000004
-    case sys_unknown_error      = 0xffffffff
-}
-
 enum UserState: Int {
     case signup = 0
     case verify = 1

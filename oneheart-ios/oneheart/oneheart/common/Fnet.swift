@@ -8,23 +8,48 @@
 
 import Foundation
 
+public enum Code: Int {
+    case existing_mail      = 0x00001001
+    case existing_name      = 0x00001002
+    case existing_phone     = 0x00001003
+    
+    case signin_failed      = 0x00001101
+    
+    case success                = 0x00000000
+    case sys_illegal_access     = 0xff000001
+    case sys_illegal_resource   = 0xff000002
+    case sys_illegal_argument   = 0xff000003
+    case sys_illegal_message    = 0xff000004
+    case sys_unknown_error      = 0xffffffff
+}
+
 public class FNet {
     
     private static var server = "http://127.0.0.1:80"
     
-    public class func server(host: String, port: Int = 80, https: Bool = false) {
+    public class func server(host   : String,
+                             port   : Int   = 80,
+                             https  : Bool  = false) {
         FNet.server = "http\(https ? "s" : "")://\(host):\(port)"
     }
     
-    public class func get(path: String, headParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
+    public class func get(path      : String,
+                          headParam : [String:String] = [:],
+                          done      : ((Code?, String, [String:Any]) -> Void)? = nil) {
         FNet.send(method: "GET", url: FNet.server + path, headParam: headParam, done: done)
     }
     
-    public class func post(path: String, headParam: [String:String] = [:], bodyParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
+    public class func post(path     : String,
+                           headParam: [String:String] = [:],
+                           bodyParam: [String:String] = [:],
+                           done     : ((Code?, String, [String:Any]) -> Void)? = nil) {
         FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, bodyParam: bodyParam, done: done)
     }
     
-    public class func post(path: String, headParam: [String:String] = [:], jsonParam: [String:Any] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
+    public class func post(path     : String,
+                           headParam: [String:String] = [:],
+                           jsonParam: [String:Any] = [:],
+                           done     : ((Code?, String, [String:Any]) -> Void)? = nil) {
         FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, jsonParam: jsonParam, done: done)
     }
 
@@ -33,7 +58,7 @@ public class FNet {
                             headParam   : [String:String]   = [:],
                             bodyParam   : [String:String]   = [:],
                             jsonParam   : [String:Any]      = [:],
-                            done        : ((Int, String, [String:Any]) -> Void)? = nil) {
+                            done        : ((Code?, String, [String:Any]) -> Void)? = nil) {
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method
@@ -68,8 +93,15 @@ public class FNet {
         URLSession.shared.dataTask(with: request) {(data, response, error) in
             print("<< " + String(data: data ?? Data(), encoding: .utf8)!)
             print("====")
-            let json = try? JSONSerialization.jsonObject(with: data ?? Data(), options: .mutableContainers) as! Dictionary<String, Any>
-            done?(json!["code"] as! Int, json!["desc"] as! String, json!)
+            if let json = try? JSONSerialization.jsonObject(with: data ?? Data(), options: .mutableContainers) as! Dictionary<String, Any> {
+                DispatchQueue.main.async {
+                    done?(Code(rawValue: json["code"] as! Int), json["desc"] as! String, json)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    done?(Code.sys_unknown_error, "network fault", [:])
+                }
+            }
         }.resume()
     }
     

@@ -15,10 +15,6 @@
 		529D2BBA1FC04053009A618D /* FUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D2BB91FC04053009A618D /* FUtil.swift */; };
 		52EAEDD41FBD73DA00B698BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEDD31FBD73DA00B698BA /* AppDelegate.swift */; };
 		52EAEDDB1FBD73DA00B698BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52EAEDDA1FBD73DA00B698BA /* Assets.xcassets */; };
-		52EAEE021FBD74E800B698BA /* ConfigController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEDFE1FBD74E700B698BA /* ConfigController.swift */; };
-		52EAEE031FBD74E800B698BA /* SignController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEDFF1FBD74E700B698BA /* SignController.swift */; };
-		52EAEE041FBD74E800B698BA /* ReadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEE001FBD74E700B698BA /* ReadController.swift */; };
-		52EAEE051FBD74E800B698BA /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEE011FBD74E700B698BA /* LaunchController.swift */; };
 		52EAEE081FBD74F000B698BA /* FNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEE061FBD74F000B698BA /* FNet.swift */; };
 		52EAEE091FBD74F000B698BA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EAEE071FBD74F000B698BA /* Model.swift */; };
 		52EAEE0C1FBD74F700B698BA /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52EAEE0A1FBD74F600B698BA /* Launch.storyboard */; };
@@ -36,10 +32,6 @@
 		52EAEDD31FBD73DA00B698BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52EAEDDA1FBD73DA00B698BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52EAEDDF1FBD73DA00B698BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		52EAEDFE1FBD74E700B698BA /* ConfigController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigController.swift; sourceTree = "<group>"; };
-		52EAEDFF1FBD74E700B698BA /* SignController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignController.swift; sourceTree = "<group>"; };
-		52EAEE001FBD74E700B698BA /* ReadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadController.swift; sourceTree = "<group>"; };
-		52EAEE011FBD74E700B698BA /* LaunchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchController.swift; sourceTree = "<group>"; };
 		52EAEE061FBD74F000B698BA /* FNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FNet.swift; sourceTree = "<group>"; };
 		52EAEE071FBD74F000B698BA /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		52EAEE0A1FBD74F600B698BA /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
@@ -100,10 +92,6 @@
 		52EAEDFC1FBD749400B698BA /* view */ = {
 			isa = PBXGroup;
 			children = (
-				52EAEDFE1FBD74E700B698BA /* ConfigController.swift */,
-				52EAEE011FBD74E700B698BA /* LaunchController.swift */,
-				52EAEE001FBD74E700B698BA /* ReadController.swift */,
-				52EAEDFF1FBD74E700B698BA /* SignController.swift */,
 				52435B831FBF270A006DE637 /* Main.swift */,
 				52435B851FBF2A44006DE637 /* ViewLaunch.swift */,
 				52435B871FBF2CE3006DE637 /* ViewRead.swift */,
@@ -197,15 +185,11 @@
 				526B8BF01FBD814D005CA7B2 /* FUI.swift in Sources */,
 				52EAEE091FBD74F000B698BA /* Model.swift in Sources */,
 				52EAEDD41FBD73DA00B698BA /* AppDelegate.swift in Sources */,
-				52EAEE051FBD74E800B698BA /* LaunchController.swift in Sources */,
 				52435B8A1FBF3790006DE637 /* ViewSign.swift in Sources */,
 				52435B841FBF270A006DE637 /* Main.swift in Sources */,
-				52EAEE031FBD74E800B698BA /* SignController.swift in Sources */,
 				529D2BBA1FC04053009A618D /* FUtil.swift in Sources */,
-				52EAEE021FBD74E800B698BA /* ConfigController.swift in Sources */,
 				52EAEE081FBD74F000B698BA /* FNet.swift in Sources */,
 				52435B861FBF2A44006DE637 /* ViewLaunch.swift in Sources */,
-				52EAEE041FBD74E800B698BA /* ReadController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

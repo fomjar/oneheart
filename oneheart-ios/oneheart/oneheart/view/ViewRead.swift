@@ -10,59 +10,78 @@ import UIKit
 
 class ViewRead: FUI.FView {
     
-    private var pack        : FUI.FView!
-    private var read        : FUI.FView!
-    private var write       : FUI.FView!
-    private var intention   : UITextField!
-    private var send        : UIButton!
-    private var load        : UIActivityIndicatorView!
+    private var pack            : FUI.FView!
+    private var read            : FUI.FView!
+    private var write           : FUI.FView!
+    private var intentionRead   : UILabel!
+    private var intentionWrite  : UITextField!
+    private var send            : UIButton!
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
     init() {
         super.init(frame: CGRect())
-        self.fitScreen()
+        self.frameScreen()
         
         self.read = FUI.FView()
-        self.read.fitScreen()
+        self.read.frameScreen()
         self.write = FUI.FView()
-        self.write.fitScreen()
+        self.write.frameScreen()
+        self.write.backgroundColor = UIColor.lightGray
         
-        self.load = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        self.load.center = self.read.center
-        self.load.startAnimating()
-        self.read.addSubview(load)
+        self.intentionRead = UILabel()
         
-        self.intention = UITextField(frame: CGRect(x: 0, y: 0, width: self.frame.width * 0.8, height: 40))
-        self.intention.borderStyle = .roundedRect
-        self.intention.placeholder = "请输入你的心意"
-        self.intention.textAlignment = .center
-        self.intention.center = self.write.center
-        self.write.addSubview(self.intention)
+        self.intentionWrite = UITextField()
+        self.intentionWrite.frame = CGRect(x: 0, y: 0, width: self.frame.width * 0.8, height: 36)
+        self.intentionWrite.borderStyle = .roundedRect
+        self.intentionWrite.placeholder = "请输入你的心意"
+        self.intentionWrite.textAlignment = .center
+        self.intentionWrite.center = self.write.center
+        self.write.addSubview(self.intentionWrite)
         
         self.send = UIButton(type: .system)
+        self.send.frame = CGRect(x: 0, y: 0, width: 80, height: 32)
+        self.send.center.x = self.intentionWrite.center.x
+        self.send.center.y = self.intentionWrite.center.y + 60
         self.send.setTitle("发送", for: .normal)
-        self.send.frame = CGRect(x: 0, y: 0, width: 80, height: 40)
-        self.send.center.x = self.intention.center.x
-        self.send.center.y = self.intention.center.y + 40
         self.write.addSubview(self.send)
         
         self.pack = FUI.packHorizontal([self.read, self.write])
-        self.pack.autoSlide()
+        self.pack.toGallery()
         self.addSubview(self.pack)
 
-        self.onShow {
-            let parent = self.superview
-            if !Model.user.valid() {
-                ViewSign().show(on: parent, style: .coverBottom)
-                return
-            }
-            // request net data
+        self.didShow {
+//            if !Model.user.valid() {
+            let sign = ViewSign()
+            sign.show(on: self.superview, style: .coverBottom)
+            sign.didHide {self.doRead()}
+//            }
+            
+            // check and fill intension
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.intention.resignFirstResponder()
+        self.intentionWrite.resignFirstResponder()
+    }
+    
+    private func doRead() {
+        let hud = FUI.FHUD(mask: 0, rect: 0)
+        hud.styleActivityIndicator(.gray)
+        hud.show(on: self.read)
+        FNet.post(path: "/intention/read", jsonParam: [
+            "uid" : Model.user.id,
+            ]) {(code, desc, data) in
+                hud.hide()
+                if let code = code {
+                    switch code {
+                    case Code.success:
+                        print("查询成功")
+                    default:
+                        print("查询失败：\(desc)")
+                    }
+                }
+        }
     }
 
 }
