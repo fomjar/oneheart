@@ -18,18 +18,21 @@ public class Fui {
         case coverRight
     }
     
-    public class func animate(with: Double = 0.4, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
+    public static let ANIMATION_TIME = 0.8
+    
+    public class func animate(with: Double = Fui.ANIMATION_TIME, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
         let springDamping   = CGFloat(1)
         let springVelocity  = CGFloat(4)
         UIView.animate(withDuration: with,
                        delay: 0,
                        usingSpringWithDamping: springDamping,
                        initialSpringVelocity: springVelocity,
+                       options: [.allowUserInteraction, .beginFromCurrentState],
                        animations: animations,
                        completion: completion)
     }
 
-    public class func show(_ view: UIView, on: UIView? = nil, style: Fui.SegueStyle = .fade, with: TimeInterval = 0.4, done: (() -> Void)? = nil) {
+    public class func show(_ view: UIView, on: UIView? = nil, style: Fui.SegueStyle = .fade, with: TimeInterval = Fui.ANIMATION_TIME, done: (() -> Void)? = nil) {
         let parent = (on ?? view.superview)!
         if 0 == with {
             parent.addSubview(view)
@@ -70,7 +73,7 @@ public class Fui {
         }
     }
     
-    public class func hide(_ view: UIView, style: Fui.SegueStyle = .fade, with: TimeInterval = 0.4, done: (() -> Void)? = nil) {
+    public class func hide(_ view: UIView, style: Fui.SegueStyle = .fade, with: TimeInterval = Fui.ANIMATION_TIME, done: (() -> Void)? = nil) {
         let parent = view.superview!
         if 0 == with {
             view.removeFromSuperview()
