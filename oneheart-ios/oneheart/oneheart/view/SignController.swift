@@ -59,7 +59,7 @@ class SignController: UIViewController {
     }
     
     @IBAction func vInSubmit(_ sender: Any) {
-        Fnet.post(path: "/user/signin", jsonParam: [
+        FNet.post(path: "/user/signin", jsonParam: [
             "mail" : tfInMail.text!,
             "pass" : tfInPass.text!
         ]) {(code, desc, data) in
@@ -81,7 +81,7 @@ class SignController: UIViewController {
     }
     
     @IBAction func vUpSubmit(_ sender: Any) {
-        Fnet.post(path: "/user/signup", jsonParam: [
+        FNet.post(path: "/user/signup", jsonParam: [
             "mail" : tfUpMail.text!,
             "pass" : tfUpPass.text!
         ]) {(code, desc, data) in

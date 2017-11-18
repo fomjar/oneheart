@@ -8,10 +8,14 @@
 
 import UIKit
 
-public class Fui {
+public class FUI {
     
     public enum SegueStyle {
         case fade
+        case fadeTop
+        case fadeLeft
+        case fadeBottom
+        case fadeRight
         case coverTop
         case coverLeft
         case coverBottom
@@ -20,7 +24,7 @@ public class Fui {
     
     public static let ANIMATION_TIME = 0.8
     
-    public class func animate(with: Double = Fui.ANIMATION_TIME, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
+    public class func animate(with: Double = FUI.ANIMATION_TIME, animations: @escaping FBlock, completion: ((Bool) -> Void)? = nil) {
         let springDamping   = CGFloat(1)
         let springVelocity  = CGFloat(4)
         UIView.animate(withDuration: with,
@@ -32,7 +36,7 @@ public class Fui {
                        completion: completion)
     }
 
-    public class func show(_ view: UIView, on: UIView? = nil, style: Fui.SegueStyle = .fade, with: TimeInterval = Fui.ANIMATION_TIME, done: (() -> Void)? = nil) {
+    public class func show(_ view: UIView, on: UIView? = nil, style: FUI.SegueStyle = .fade, with: TimeInterval = FUI.ANIMATION_TIME, done: FBlock? = nil) {
         let parent = (on ?? view.superview)!
         if 0 == with {
             parent.addSubview(view)
@@ -45,35 +49,83 @@ public class Fui {
             view.layer.opacity = 0
             
             parent.addSubview(view)
-            Fui.animate(with: with, animations: {view.layer.opacity = opacity}, completion: {_ in done?()})
+            FUI.animate(with: with, animations: {view.layer.opacity = opacity}, completion: {_ in done?()})
+        case .fadeTop:
+            let opacity = view.layer.opacity
+            let y = view.frame.origin.y
+            let offset = min(view.frame.width, view.frame.height)
+            view.layer.opacity = 0
+            view.frame.origin.y = view.frame.origin.y - offset
+            
+            parent.addSubview(view)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = opacity
+                view.frame.origin.y = y
+            }, completion: {_ in done?()})
+        case .fadeLeft:
+            let opacity = view.layer.opacity
+            let x = view.frame.origin.x
+            let offset = min(view.frame.width, view.frame.height)
+            view.layer.opacity = 0
+            view.frame.origin.x = view.frame.origin.x - offset
+            
+            parent.addSubview(view)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = opacity
+                view.frame.origin.x = x
+            }, completion: {_ in done?()})
+        case .fadeBottom:
+            let opacity = view.layer.opacity
+            let y = view.frame.origin.y
+            let offset = min(view.frame.width, view.frame.height)
+            view.layer.opacity = 0
+            view.frame.origin.y = view.frame.origin.y + offset
+            
+            parent.addSubview(view)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = opacity
+                view.frame.origin.y = y
+            }, completion: {_ in done?()})
+        case .fadeRight:
+            let opacity = view.layer.opacity
+            let x = view.frame.origin.x
+            let offset = min(view.frame.width, view.frame.height)
+            view.layer.opacity = 0
+            view.frame.origin.x = view.frame.origin.x + offset
+            
+            parent.addSubview(view)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = opacity
+                view.frame.origin.x = x
+            }, completion: {_ in done?()})
         case .coverTop:
             let y = view.frame.origin.y
             view.frame.origin.y = -view.frame.height
             
             parent.addSubview(view)
-            Fui.animate(with: with, animations: {view.frame.origin.y = y}, completion: {_ in done?()})
+            FUI.animate(with: with, animations: {view.frame.origin.y = y}, completion: {_ in done?()})
         case .coverLeft:
             let x = view.frame.origin.x
             view.frame.origin.x = -view.frame.width
             
             parent.addSubview(view)
-            Fui.animate(with: with, animations: {view.frame.origin.x = x}, completion: {_ in done?()})
+            FUI.animate(with: with, animations: {view.frame.origin.x = x}, completion: {_ in done?()})
         case .coverBottom:
             let y = view.frame.origin.y
             view.frame.origin.y = parent.frame.height
             
             parent.addSubview(view)
-            Fui.animate(with: with, animations: {view.frame.origin.y = y}, completion: {_ in done?()})
+            FUI.animate(with: with, animations: {view.frame.origin.y = y}, completion: {_ in done?()})
         case .coverRight:
             let x = view.frame.origin.x
             view.frame.origin.x = parent.frame.width
             
             parent.addSubview(view)
-            Fui.animate(with: with, animations: {view.frame.origin.x = x}, completion: {_ in done?()})
+            FUI.animate(with: with, animations: {view.frame.origin.x = x}, completion: {_ in done?()})
         }
     }
     
-    public class func hide(_ view: UIView, style: Fui.SegueStyle = .fade, with: TimeInterval = Fui.ANIMATION_TIME, done: (() -> Void)? = nil) {
+    public class func hide(_ view: UIView, style: FUI.SegueStyle = .fade, with: TimeInterval = FUI.ANIMATION_TIME, done: FBlock? = nil) {
         let parent = view.superview!
         if 0 == with {
             view.removeFromSuperview()
@@ -83,16 +135,68 @@ public class Fui {
         switch style {
         case .fade:
             let opacity = view.layer.opacity
-            Fui.animate(with: with, animations: {
+            FUI.animate(with: with, animations: {
                 view.layer.opacity = 0
             }, completion: {_ in
                 view.removeFromSuperview()
                 view.layer.opacity = opacity
                 done?()
             })
+        case .fadeTop:
+            let opacity = view.layer.opacity
+            let y = view.frame.origin.y
+            let offset = min(view.frame.width, view.frame.height)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = 0
+                view.frame.origin.y = view.frame.origin.y - offset
+            }, completion: {_ in
+                view.removeFromSuperview()
+                view.layer.opacity = opacity
+                view.frame.origin.y = y
+                done?()
+            })
+        case .fadeLeft:
+            let opacity = view.layer.opacity
+            let x = view.frame.origin.x
+            let offset = min(view.frame.width, view.frame.height)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = 0
+                view.frame.origin.x = view.frame.origin.x - offset
+            }, completion: {_ in
+                view.removeFromSuperview()
+                view.layer.opacity = opacity
+                view.frame.origin.x = x
+                done?()
+            })
+        case .fadeBottom:
+            let opacity = view.layer.opacity
+            let y = view.frame.origin.y
+            let offset = min(view.frame.width, view.frame.height)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = 0
+                view.frame.origin.y = view.frame.origin.y + offset
+            }, completion: {_ in
+                view.removeFromSuperview()
+                view.layer.opacity = opacity
+                view.frame.origin.y = y
+                done?()
+            })
+        case .fadeRight:
+            let opacity = view.layer.opacity
+            let x = view.frame.origin.x
+            let offset = min(view.frame.width, view.frame.height)
+            FUI.animate(with: with, animations: {
+                view.layer.opacity = 0
+                view.frame.origin.x = view.frame.origin.x + offset
+            }, completion: {_ in
+                view.removeFromSuperview()
+                view.layer.opacity = opacity
+                view.frame.origin.x = x
+                done?()
+            })
         case .coverTop:
             let y = view.frame.origin.y
-            Fui.animate(with: with, animations: {
+            FUI.animate(with: with, animations: {
                 view.frame.origin.y = -view.frame.height
             }, completion: {_ in
                 view.removeFromSuperview()
@@ -101,7 +205,7 @@ public class Fui {
             })
         case .coverLeft:
             let x = view.frame.origin.x
-            Fui.animate(with: with, animations: {
+            FUI.animate(with: with, animations: {
                 view.frame.origin.x = -view.frame.width
             }, completion: {_ in
                 view.removeFromSuperview()
@@ -110,7 +214,7 @@ public class Fui {
             })
         case .coverBottom:
             let y = view.frame.origin.y
-            Fui.animate(with: with, animations: {
+            FUI.animate(with: with, animations: {
                 view.frame.origin.y = parent.frame.height
             }, completion: {_ in
                 view.removeFromSuperview()
@@ -119,7 +223,7 @@ public class Fui {
             })
         case .coverRight:
             let x = view.frame.origin.x
-            Fui.animate(with: with, animations: {
+            FUI.animate(with: with, animations: {
                 view.frame.origin.x = parent.frame.width
             }, completion: {_ in
                 view.removeFromSuperview()
@@ -199,29 +303,29 @@ public class Fui {
 
     open class FView: UIView {
         
-        private var onShow  : [() -> Void] = []
-        private var onHide  : [() -> Void] = []
+        private var onShow  : [FBlock] = []
+        private var onHide  : [FBlock] = []
         
-        public func show(on: UIView? = nil, style: Fui.SegueStyle = .fade, with: TimeInterval = 1, done: (() -> Void)? = nil) {
-            Fui.show(self, on: on, style: style, with: with, done: done)
+        public func show(on: UIView? = nil, style: FUI.SegueStyle = .fade, with: TimeInterval = 1, done: FBlock? = nil) {
+            FUI.show(self, on: on, style: style, with: with, done: done)
             for block in onShow {
                 block()
             }
         }
-        public func hide(style: Fui.SegueStyle = .fade, with: TimeInterval = 1, done: (() -> Void)? = nil) {
-            Fui.hide(self, style: style, with: with, done: {
+        public func hide(style: FUI.SegueStyle = .fade, with: TimeInterval = 1, done: FBlock? = nil) {
+            FUI.hide(self, style: style, with: with, done: {
                 for block in self.onHide {
                     block()
                 }
                 done?()
             })
         }
-        public func onShow(_ block: (() -> Void)?) {
+        public func onShow(_ block: FBlock? = nil) {
             if let b = block {
                 onShow.append(b)
             }
         }
-        public func onHide(_ block: (() -> Void)?) {
+        public func onHide(_ block: FBlock? = nil) {
             if let b = block {
                 onHide.append(b)
             }
@@ -271,7 +375,7 @@ public class Fui {
                     }
                 }
                 if let view = nearestView {
-                    Fui.animate(animations: {
+                    FUI.animate(animations: {
                         self.frame.origin.x = parent.frame.width / 2 - view.center.x
                         self.frame.origin.y = parent.frame.height / 2 - view.center.y
                     })
@@ -319,7 +423,7 @@ public class Fui {
             if let pack = self.fpack {
                 pack.removeFromSuperview()
             }
-            self.fpack = Fui.packPadding(Fui.packVertical(views), top: 4, left: 4, bottom: 4, right: 4)
+            self.fpack = FUI.packPadding(FUI.packVertical(views), top: 4, left: 4, bottom: 4, right: 4)
             self.frect.addSubview(self.fpack!)
             self.frect.frame = (self.fpack?.frame)!
             self.frect.center = self.center
@@ -331,7 +435,7 @@ public class Fui {
             self.onHide({indicator.stopAnimating()})
             
             self.packSubviews([
-                Fui.packPadding(indicator, top: 8, left: 8, bottom: 8, right: 8)
+                FUI.packPadding(indicator, top: 8, left: 8, bottom: 8, right: 8)
                 ])
         }
     }

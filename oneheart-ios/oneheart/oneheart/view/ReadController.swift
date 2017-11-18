@@ -105,7 +105,7 @@ class ReadController: UIViewController {
         
         let intention = self.tfIntention.text!
         
-        Fnet.post(path: "/intention/write", jsonParam: [
+        FNet.post(path: "/intention/write", jsonParam: [
             "uid"       : Model.user.id,
             "intention" : intention
         ]) {

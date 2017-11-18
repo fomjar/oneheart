@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewSign: Fui.FView {
+class ViewSign: FUI.FView {
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
@@ -17,9 +17,9 @@ class ViewSign: Fui.FView {
         self.fitScreen()
         self.backgroundColor = UIColor.red
         
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {_ in
-//            if !Model.user.valid() {
-//            }
+        FUtil.async(3) {
+            //            if !Model.user.valid() {
+            //            }
             self.hide(style: .coverBottom)
         }
     }

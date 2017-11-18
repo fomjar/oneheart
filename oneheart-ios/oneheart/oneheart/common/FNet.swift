@@ -8,24 +8,24 @@
 
 import Foundation
 
-public class Fnet {
+public class FNet {
     
     private static var server = "http://127.0.0.1:80"
     
     public class func server(host: String, port: Int = 80, https: Bool = false) {
-        Fnet.server = "http\(https ? "s" : "")://\(host):\(port)"
+        FNet.server = "http\(https ? "s" : "")://\(host):\(port)"
     }
     
     public class func get(path: String, headParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
-        Fnet.send(method: "GET", url: Fnet.server + path, headParam: headParam, done: done)
+        FNet.send(method: "GET", url: FNet.server + path, headParam: headParam, done: done)
     }
     
     public class func post(path: String, headParam: [String:String] = [:], bodyParam: [String:String] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
-        Fnet.send(method: "POST", url: Fnet.server + path, headParam: headParam, bodyParam: bodyParam, done: done)
+        FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, bodyParam: bodyParam, done: done)
     }
     
     public class func post(path: String, headParam: [String:String] = [:], jsonParam: [String:Any] = [:], done: ((Int, String, [String:Any]) -> Void)? = nil) {
-        Fnet.send(method: "POST", url: Fnet.server + path, headParam: headParam, jsonParam: jsonParam, done: done)
+        FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, jsonParam: jsonParam, done: done)
     }
 
     private class func send(method      : String,

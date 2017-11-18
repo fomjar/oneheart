@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ViewRead: Fui.FView {
+class ViewRead: FUI.FView {
     
-    private var pack        : Fui.FView!
-    private var read        : Fui.FView!
-    private var write       : Fui.FView!
+    private var pack        : FUI.FView!
+    private var read        : FUI.FView!
+    private var write       : FUI.FView!
     private var intention   : UITextField!
     private var send        : UIButton!
     private var load        : UIActivityIndicatorView!
@@ -23,9 +23,9 @@ class ViewRead: Fui.FView {
         super.init(frame: CGRect())
         self.fitScreen()
         
-        self.read = Fui.FView()
+        self.read = FUI.FView()
         self.read.fitScreen()
-        self.write = Fui.FView()
+        self.write = FUI.FView()
         self.write.fitScreen()
         
         self.load = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -47,7 +47,7 @@ class ViewRead: Fui.FView {
         self.send.center.y = self.intention.center.y + 40
         self.write.addSubview(self.send)
         
-        self.pack = Fui.packHorizontal([self.read, self.write])
+        self.pack = FUI.packHorizontal([self.read, self.write])
         self.pack.autoSlide()
         self.addSubview(self.pack)
 

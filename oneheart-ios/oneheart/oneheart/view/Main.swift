@@ -12,6 +12,6 @@ class Main: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(ViewLaunch())
+        ViewLaunch().show(on: self.view)
     }
 }
