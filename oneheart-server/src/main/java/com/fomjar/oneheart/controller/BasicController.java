@@ -205,20 +205,21 @@ public interface BasicController {
         SYS_ILLEGAL_RESOURCE    (0xff000002, "非法资源"),
         SYS_ILLEGAL_ARGUMENT    (0xff000003, "非法参数"),
         SYS_ILLEGAL_MESSAGE     (0xff000004, "非法消息"),
+        SYS_NETWORK_FAULT       (0xfffffffe, "网络故障"),
         SYS_UNKNOWN_ERROR       (0xffffffff, "未知错误");
         /****************************************************/
         
         
-        private int status;
-        private String msg;
+        private long		status;
+        private String 	msg;
         
-        Code(int status, String msg) {
-            this.status = status;
-            this.msg = msg;
+        Code(long status, String msg) {
+            this.status 	= status;
+            this.msg 	= msg;
         }
         
-        public int      code()    {return status;}
-        public String   desc()       {return msg;}
+        public long		code()	{return status;}
+        public String   	desc()  {return msg;}
         
     }
 

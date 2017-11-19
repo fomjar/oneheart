@@ -51,13 +51,14 @@ class ViewRead: FUI.FView {
         self.addSubview(self.pack)
 
         self.didShow {
-//            if !Model.user.valid() {
-            let sign = ViewSign()
-            sign.show(on: self.superview, style: .coverBottom)
-            sign.didHide {self.doRead()}
-//            }
+            if !Model.user.valid() {
+                let sign = ViewSign()
+                sign.show(on: self.superview, style: .coverBottom)
+                sign.didHide {self.doRead()}
+                return
+            }
             
-            // check and fill intension
+            self.doRead()
         }
     }
     

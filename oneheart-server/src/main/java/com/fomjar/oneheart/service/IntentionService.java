@@ -17,14 +17,14 @@ public class IntentionService extends BasicService {
     @Autowired
     private UserService user;
     
-    public synchronized List<Map<String, Object>> read(int uid) {
-        List<Map<String, Object>> list = mapper.selectDidReceive(uid);
+    public synchronized List<Map<String, Object>> read(Map<String, Object> cond) {
+        List<Map<String, Object>> list = mapper.selectDidReceive(cond);
         
         if (list.isEmpty()) {
-            list = mapper.selectWillReceive(uid);
+            list = mapper.selectWillReceive(cond);
             if (!list.isEmpty()) {
                 Map<String, Object> map = list.get(0);
-                mapper.update(easyMap().put("id", map.get("id")).get(), easyMap().put("receiver", uid).get());
+                mapper.update(easyMap().put("id", map.get("id")).get(), cond);
             }
         }
         

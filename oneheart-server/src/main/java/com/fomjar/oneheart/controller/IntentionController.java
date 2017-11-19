@@ -22,8 +22,8 @@ public class IntentionController implements BasicController {
         if (!argsMatched(cond, "uid"))
             return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
         
-        int uid = (int) cond.get("uid");
-        return jsonObject().code(Code.SUCCESS).put("intentions", service.read(uid)).toString();
+        cond.put("receiver", cond.remove("uid"));
+        return jsonObject().code(Code.SUCCESS).put("intentions", service.read(cond)).toString();
     }
     
     @RequestMapping("/write")

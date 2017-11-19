@@ -20,6 +20,7 @@ public enum Code: Int {
     case sys_illegal_resource   = 0xff000002
     case sys_illegal_argument   = 0xff000003
     case sys_illegal_message    = 0xff000004
+    case sys_network_fault      = 0xfffffffe
     case sys_unknown_error      = 0xffffffff
 }
 
@@ -91,16 +92,21 @@ public class FNet {
         }
         
         URLSession.shared.dataTask(with: request) {(data, response, error) in
-            print("<< " + String(data: data ?? Data(), encoding: .utf8)!)
-            print("====")
-            if let json = try? JSONSerialization.jsonObject(with: data ?? Data(), options: .mutableContainers) as! Dictionary<String, Any> {
+            if let data = data {
+                print("<< " + String(data: data, encoding: .utf8)!)
+                print("====")
                 DispatchQueue.main.async {
-                    done?(Code(rawValue: json["code"] as! Int), json["desc"] as! String, json)
+                    if let json = try? JSONSerialization.jsonObject(with: data,
+                                                                    options: .mutableContainers) as! Dictionary<String, Any> {
+                        done?(Code(rawValue: json["code"] as! Int), json["desc"] as! String, json)
+                    } else {
+                        done?(Code.sys_unknown_error, "unknown error", [:])
+                    }
                 }
             } else {
-                DispatchQueue.main.async {
-                    done?(Code.sys_unknown_error, "network fault", [:])
-                }
+                print(error as Any)
+                print("====")
+                done?(Code.sys_network_fault, "network fault", [:])
             }
         }.resume()
     }

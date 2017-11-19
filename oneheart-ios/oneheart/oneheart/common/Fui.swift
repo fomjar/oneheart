@@ -380,23 +380,23 @@ public class FUI {
             })
         }
         public func willShow(_ block: FBlock? = nil) {
-            if let b = block {
-                self.blockWillShow.append(b)
+            if let block = block {
+                self.blockWillShow.append(block)
             }
         }
         public func didShow(_ block: FBlock? = nil) {
-            if let b = block {
-                self.blockDidShow.append(b)
+            if let block = block {
+                self.blockDidShow.append(block)
             }
         }
         public func willHide(_ block: FBlock? = nil) {
-            if let b = block {
-                self.blockWillHide.append(b)
+            if let block = block {
+                self.blockWillHide.append(block)
             }
         }
         public func didHide(_ block: FBlock? = nil) {
-            if let b = block {
-                self.blockDidHide.append(b)
+            if let block = block {
+                self.blockDidHide.append(block)
             }
         }
         public func frameScreen() {

@@ -19,7 +19,7 @@ public interface IntentionMapper {
         @Override
         public String table() {return "t_intention";}
         
-        public String selectDidReceive(int receiver) {
+        public String selectDidReceive(Map<String, Object> cond) {
             SQL sql = sqlSelect(new HashMap<>());
             sql.AND();
             sql.WHERE("`receiver` = #{receiver}");
@@ -30,7 +30,7 @@ public interface IntentionMapper {
             return sql.toString();
         }
         
-        public String selectWillReceive(int receiver) {
+        public String selectWillReceive(Map<String, Object> cond) {
             SQL sql = sqlSelect(new HashMap<>());
             sql.AND();
             sql.WHERE("`receiver` is null");
@@ -46,10 +46,10 @@ public interface IntentionMapper {
     List<Map<String, Object>> select(Map<String, Object> cond);
     
     @SelectProvider(type = Provider.class, method = "selectDidReceive")
-    List<Map<String, Object>> selectDidReceive(int receiver);
+    List<Map<String, Object>> selectDidReceive(Map<String, Object> cond);
     
     @SelectProvider(type = Provider.class, method = "selectWillReceive")
-    List<Map<String, Object>> selectWillReceive(int receiver);
+    List<Map<String, Object>> selectWillReceive(Map<String, Object> cond);
     
     @UpdateProvider(type = Provider.class, method = "update")
     int update(Map<String, Object> cond, Map<String, Object> data);
