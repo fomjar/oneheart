@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 @Mapper
-public interface IntentionMapper {
+public interface PostMapper {
     
-    class Provider implements BasicProvider {@Override public String table() {return "t_intention";}}
+    class Provider implements BasicProvider {@Override public String table() {return "t_post";}}
     
     @SelectProvider(type = Provider.class, method = "select")
     List<Map<String, Object>> select(Map<String, Object> cond);
@@ -28,13 +28,12 @@ public interface IntentionMapper {
     int delete(Map<String, Object> cond);
     
     @Select({
-        "select i.*",
-        "  from t_intention i, t_post p",
-        " where i.`invalid` = 0",
-        "   and p.`invalid` = 0",
-        "   and p.`user`    = #{user}",
-        "   and i.`id`      != p.`id`"
+        "select *",
+        "  from t_post",
+        " where `invalid`   = 0",
+        "   and `user`      = #{user}",
+        "   and to_days(`update`) = to_days(now())"
     })
-    List<Map<String, Object>> selectWillPost(Map<String, Object> cond);
+    List<Map<String, Object>> selectToday(Map<String, Object> cond);
 
 }

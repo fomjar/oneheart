@@ -3,7 +3,7 @@ package com.fomjar.oneheart.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 @Mapper
-public interface IntentionMapper {
+public interface LikeMapper {
     
-    class Provider implements BasicProvider {@Override public String table() {return "t_intention";}}
+    class Provider implements BasicProvider {@Override public String table() {return "t_like";}}
     
     @SelectProvider(type = Provider.class, method = "select")
     List<Map<String, Object>> select(Map<String, Object> cond);
@@ -24,17 +24,19 @@ public interface IntentionMapper {
     @InsertProvider(type = Provider.class, method = "insert")
     int insert(Map<String, Object> data);
     
-    @DeleteProvider(type = Provider.class, method = "delete")
+    @Delete({
+        "delete from t_like",
+        " where `user`      = #{user}",
+        "   and `intention` = #{intention}"
+    })
     int delete(Map<String, Object> cond);
     
     @Select({
-        "select i.*",
-        "  from t_intention i, t_post p",
-        " where i.`invalid` = 0",
-        "   and p.`invalid` = 0",
-        "   and p.`user`    = #{user}",
-        "   and i.`id`      != p.`id`"
+        "select count(1)",
+        "  from t_like",
+        " where `invalid`   = 0",
+        "   and `intention` = #{intention}"
     })
-    List<Map<String, Object>> selectWillPost(Map<String, Object> cond);
+    int count(Map<String, Object> cond);
 
 }
