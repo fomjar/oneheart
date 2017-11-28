@@ -1,5 +1,8 @@
 package com.fomjar.oneheart.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fomjar.oneheart.mapper.LikeMapper;
@@ -21,6 +24,14 @@ public class LikeService extends BasicService {
                 .put("user",        user)
                 .put("intention",   intention)
                 .get());
+    }
+    
+    public boolean islike(int user, int intention) {
+        List<Map<String, Object>> list = mapper.select(easyMap()
+                .put("user",        user)
+                .put("intention",   intention)
+                .get());
+        return !list.isEmpty();
     }
     
     public int count(int intention) {

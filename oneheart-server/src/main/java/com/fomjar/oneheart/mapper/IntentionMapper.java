@@ -33,7 +33,10 @@ public interface IntentionMapper {
         " where i.`invalid` = 0",
         "   and p.`invalid` = 0",
         "   and p.`user`    = #{user}",
-        "   and i.`id`      != p.`id`"
+        "   and i.`id`      != p.`id`",     // 没收到过的
+        "   and i.`user`    != #{user}",    // 不是自己发的
+        " order by rand()",                 // 随机
+        " limit 1"                          // 1条
     })
     List<Map<String, Object>> selectWillPost(Map<String, Object> cond);
 
