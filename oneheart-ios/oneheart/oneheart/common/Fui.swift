@@ -440,7 +440,7 @@ public class FUI {
                     }
                 }
                 if let view = nearestView {
-                    FUI.animate {
+                    FUI.animate(FUI.ANIMATION_TIME / 2) {
                         self.frame.origin.x = parent.frame.width / 2 - view.center.x
                         self.frame.origin.y = parent.frame.height / 2 - view.center.y
                     }
