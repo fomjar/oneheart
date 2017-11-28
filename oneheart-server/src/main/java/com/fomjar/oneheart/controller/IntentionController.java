@@ -22,7 +22,10 @@ public class IntentionController implements BasicController {
         if (!argsMatched(cond, "user"))
             return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
         
-        return jsonObject().code(Code.SUCCESS).put("intentions", service.read((int) cond.get("user"))).toString();
+        return jsonObject()
+                .code(Code.SUCCESS)
+                .put("intentions", service.read((int) cond.get("user")))
+                .toString();
     }
     
     @RequestMapping("/write")
@@ -35,15 +38,45 @@ public class IntentionController implements BasicController {
         return jsonObject().code(Code.SUCCESS).toString();
     }
     
-    @RequestMapping("/mine")
-    String mine(@RequestBody Map<String, Object> cond) {
+    @RequestMapping("/get/write")
+    String get_write(@RequestBody Map<String, Object> cond) {
         argsOptimize(cond);
         if (!argsMatched(cond, "user"))
             return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
         
         return jsonObject()
                 .code(Code.SUCCESS)
-                .put("intentions", service.getByUser((int) cond.get("user"), null, null))
+                .put("intentions", service.getByUserWrite((int) cond.get("user"),
+                        (Integer) cond.get("page_from"),
+                        (Integer) cond.get("page_size")))
+                .toString();
+    }
+    
+    @RequestMapping("/get/like")
+    String get_like(@RequestBody Map<String, Object> cond) {
+        argsOptimize(cond);
+        if (!argsMatched(cond, "user"))
+            return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
+        
+        return jsonObject()
+                .code(Code.SUCCESS)
+                .put("intentions", service.getByUserLike((int) cond.get("user"),
+                        (Integer) cond.get("page_from"),
+                        (Integer) cond.get("page_size")))
+                .toString();
+    }
+    
+    @RequestMapping("/get/post")
+    String get_post(@RequestBody Map<String, Object> cond) {
+        argsOptimize(cond);
+        if (!argsMatched(cond, "user"))
+            return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
+        
+        return jsonObject()
+                .code(Code.SUCCESS)
+                .put("intentions", service.getByUserPost((int) cond.get("user"),
+                        (Integer) cond.get("page_from"),
+                        (Integer) cond.get("page_size")))
                 .toString();
     }
     

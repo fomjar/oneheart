@@ -39,5 +39,29 @@ public interface IntentionMapper {
         " limit 1"                          // 1条
     })
     List<Map<String, Object>> selectWillPost(Map<String, Object> cond);
+    
+    @Select({
+        "select i.*",
+        "  from t_intention i, t_like l",
+        " where i.`invalid` = 0",
+        "   and l.`invalid` = 0",
+        "   and i.`id`      = l.`intention`",
+        "   and l.`user`    = #{user}",
+        " order by i.`update` desc",
+        " limit ifnull(#{page_from}, 0), ifnull(#{page_size}, " + BasicProvider.PAGE_SIZE + ")"
+    })
+    List<Map<String, Object>> selectLike(Map<String, Object> cond);
+    
+    @Select({
+        "select i.*",
+        "  from t_intention i, t_post p",
+        " where i.`invalid` = 0",
+        "   and p.`invalid` = 0",
+        "   and i.`id`      = p.`intention`",
+        "   and p.`user`    = #{user}",
+        " order by i.`update` desc",
+        " limit ifnull(#{page_from}, 0), ifnull(#{page_size}, " + BasicProvider.PAGE_SIZE + ")"
+    })
+    List<Map<String, Object>> selectPost(Map<String, Object> cond);
 
 }

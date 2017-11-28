@@ -28,7 +28,7 @@ class ViewLaunch: FUI.FView {
             title.layer.opacity = 1
             FUI.show(title, style: .fadeBottom, with: 1, done: {
                 FUtil.async(1) {
-                    ViewRead().show(on: self.superview)
+                    ViewMain().show(on: self.superview)
                     self.hide()
                 }
             })

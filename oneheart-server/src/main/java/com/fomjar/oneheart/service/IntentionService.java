@@ -41,7 +41,11 @@ public class IntentionService extends BasicService {
         return list;
     }
     
-    public List<Map<String, Object>> getByUser(int user, Integer page_from, Integer page_size) {
+    public int write(Map<String, Object> data) {
+        return mapper.insert(data);
+    }
+    
+    public List<Map<String, Object>> getByUserWrite(int user, Integer page_from, Integer page_size) {
         List<Map<String, Object>> list = mapper.select(easyMap()
                 .put("user",      user)
                 .put("page_from", page_from, null != page_from)
@@ -53,8 +57,28 @@ public class IntentionService extends BasicService {
         return list;
     }
     
-    public int write(Map<String, Object> data) {
-        return mapper.insert(data);
+    public List<Map<String, Object>> getByUserLike(int user, Integer page_from, Integer page_size) {
+        List<Map<String, Object>> list = mapper.selectLike(easyMap()
+                .put("user",      user)
+                .put("page_from", page_from, null != page_from)
+                .put("page_size", page_size, null != page_size)
+                .get());
+        
+        fill(list, user);
+        
+        return list;
+    }
+    
+    public List<Map<String, Object>> getByUserPost(int user, Integer page_from, Integer page_size) {
+        List<Map<String, Object>> list = mapper.selectPost(easyMap()
+                .put("user",      user)
+                .put("page_from", page_from, null != page_from)
+                .put("page_size", page_size, null != page_size)
+                .get());
+        
+        fill(list, user);
+        
+        return list;
     }
     
     private void fill(List<Map<String, Object>> intentions, int user) {

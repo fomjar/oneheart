@@ -18,6 +18,8 @@ import org.apache.ibatis.jdbc.SQL;
  */
 public interface BasicProvider {
     
+    static final int PAGE_SIZE = 20;
+    
     String table();
 
     /********************** mapper直接用的接口 **********************/
@@ -28,7 +30,7 @@ public interface BasicProvider {
         clone.remove("page_size");
         return sqlSelect(clone).toString() + String.format(" LIMIT %d, %d",
                         cond.containsKey("page_from") ? cond.get("page_from") : 0,
-                        cond.containsKey("page_size") ? cond.get("page_size") : 20);
+                        cond.containsKey("page_size") ? cond.get("page_size") : PAGE_SIZE);
     }
     
     default String update(Map<String, Object> cond, Map<String, Object> data) {
