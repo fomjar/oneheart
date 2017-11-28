@@ -22,12 +22,12 @@ class ViewRead: FUI.FView {
         self.addSubview(self.label)
     }
     
-    func doRead() {
+    func read() {
         let hud = FUI.FHUD(mask: 0, rect: 0)
         hud.styleActivityIndicator(.gray)
         hud.show(on: self)
         FNet.post(path: "/intention/read", jsonParam: [
-            "uid" : Model.user.id,
+            "user" : Model.user.id,
             ]) {(code, desc, data) in
                 hud.hide()
                 if let code = code {

@@ -402,10 +402,12 @@ public class FUI {
         public func frameScreen() {
             self.frame = UIScreen.main.bounds
         }
-        public func toGallery() {
+        private var panBagan: CGPoint?
+        private var panSpeed: CGFloat! = 1.0
+        public func toGallery(speed: CGFloat = 1.0) {
+            self.panSpeed = speed
             self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(toGalleryGesture)))
         }
-        private var panBagan: CGPoint?
         @objc private func toGalleryGesture(gesture: UIPanGestureRecognizer) {
             let parent  = self.superview!
             let point   = gesture.translation(in: parent)
@@ -413,31 +415,25 @@ public class FUI {
             case .began:
                 panBagan = CGPoint(x: self.frame.origin.x + point.x, y: self.frame.origin.y + point.y)
             case .changed:
-                var left    = (self.panBagan?.x)! + point.x
-                var top     = (self.panBagan?.y)! + point.y
-                if left < 0 {
-                    if left + self.frame.width < parent.frame.width {
-                        left = parent.frame.width - self.frame.width
-                    }
-                } else {
-                    left = 0
+                self.frame.origin.x = (self.panBagan?.x)! + point.x * self.panSpeed
+                self.frame.origin.y = (self.panBagan?.y)! + point.y * self.panSpeed
+                if self.frame.origin.x + self.frame.width < parent.frame.width {
+                    self.frame.origin.x = parent.frame.width - self.frame.width
                 }
-                if top < 0 {
-                    if top + self.frame.height < parent.frame.height {
-                        top = parent.frame.height - self.frame.height
-                    }
-                } else {
-                    top = 0
+                if self.frame.origin.x > 0 {
+                    self.frame.origin.x = 0
                 }
-                self.frame.origin.x = left
-                self.frame.origin.y = top
+                if self.frame.origin.y + self.frame.height < parent.frame.height {
+                    self.frame.origin.y = parent.frame.height - self.frame.height
+                }
+                if self.frame.origin.y > 0 {
+                    self.frame.origin.y = 0
+                }
             case .ended:
-                let left    = (self.panBagan?.x)! + point.x
-                let top     = (self.panBagan?.y)! + point.y
                 var nearestView : UIView? = nil
                 var distance    : CGFloat = CGFloat(MAXFLOAT)
                 for view in self.subviews {
-                    let currentDistance = sqrt(pow(parent.frame.width / 2 - (view.center.x + left), 2) + pow(parent.frame.height / 2 - (view.center.y + top), 2))
+                    let currentDistance = sqrt(pow(parent.frame.width / 2 - (view.center.x + self.frame.origin.x), 2) + pow(parent.frame.height / 2 - (view.center.y + self.frame.origin.y), 2))
                     if currentDistance < distance {
                         distance = currentDistance
                         nearestView = view
