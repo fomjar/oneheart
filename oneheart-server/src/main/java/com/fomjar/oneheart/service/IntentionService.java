@@ -41,8 +41,12 @@ public class IntentionService extends BasicService {
         return list;
     }
     
-    public List<Map<String, Object>> read_my(int user) {
-        List<Map<String, Object>> list = mapper.select(easyMap().put("user", user).get());
+    public List<Map<String, Object>> getByUser(int user, Integer page_from, Integer page_size) {
+        List<Map<String, Object>> list = mapper.select(easyMap()
+                .put("user",      user)
+                .put("page_from", page_from, null != page_from)
+                .put("page_size", page_size, null != page_size)
+                .get());
         
         fill(list, user);
         

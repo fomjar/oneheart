@@ -97,6 +97,11 @@ public class BasicService {
             list.add(e);
             return this;
         }
+        
+        public EasyList<T> add(T e, boolean when) {
+            if (when) add(e);
+            return this;
+        }
     }
     
     /**
@@ -115,6 +120,11 @@ public class BasicService {
         
         public EasyMap<K, V> put(K key, V val) {
             map.put(key, val);
+            return this;
+        }
+        
+        public EasyMap<K, V> put(K key, V val, boolean when) {
+            if (when) put(key, val);
             return this;
         }
     }

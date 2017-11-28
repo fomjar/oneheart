@@ -35,13 +35,16 @@ public class IntentionController implements BasicController {
         return jsonObject().code(Code.SUCCESS).toString();
     }
     
-    @RequestMapping("/read/my")
-    String read_my(@RequestBody Map<String, Object> cond) {
+    @RequestMapping("/mine")
+    String mine(@RequestBody Map<String, Object> cond) {
         argsOptimize(cond);
         if (!argsMatched(cond, "user"))
             return jsonObject().code(Code.SYS_ILLEGAL_ARGUMENT).toString();
         
-        return jsonObject().code(Code.SUCCESS).put("intentions", service.read_my((int) cond.get("user"))).toString();
+        return jsonObject()
+                .code(Code.SUCCESS)
+                .put("intentions", service.getByUser((int) cond.get("user"), null, null))
+                .toString();
     }
     
 }
