@@ -26,7 +26,7 @@ class ViewMain: FUI.FView {
         self.mine = ViewMine()
         
         self.pack = FUI.packHorizontal([self.mine, self.read, self.write])
-        self.pack.toGallery(speed: 2)
+        self.pack.toGallery(2)
         self.pack.frame.origin.x = -self.mine.frame.width
         self.addSubview(self.pack)
 

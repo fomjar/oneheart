@@ -57,66 +57,66 @@ public class FUI {
         }
         switch style {
         case .fade:
-            let opacity = view.layer.opacity
-            view.layer.opacity = 0
+            let alpha = view.alpha
+            view.alpha = 0
             
             parent.addSubview(view)
             FUI.animate(with      : with,
-                        animations: {view.layer.opacity = opacity},
+                        animations: {view.alpha = alpha},
                         completion: {_ in done?()})
         case .fadeTop:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let y = view.frame.origin.y
             let offset = min(view.frame.width, view.frame.height)
-            view.layer.opacity = 0
+            view.alpha = 0
             view.frame.origin.y = view.frame.origin.y - offset
             
             parent.addSubview(view)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.y = y
                         },
                         completion: {_ in done?()})
         case .fadeLeft:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let x = view.frame.origin.x
             let offset = min(view.frame.width, view.frame.height)
-            view.layer.opacity = 0
+            view.alpha = 0
             view.frame.origin.x = view.frame.origin.x - offset
             
             parent.addSubview(view)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.x = x
                         },
                         completion: {_ in done?()})
         case .fadeBottom:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let y = view.frame.origin.y
             let offset = min(view.frame.width, view.frame.height)
-            view.layer.opacity = 0
+            view.alpha = 0
             view.frame.origin.y = view.frame.origin.y + offset
             
             parent.addSubview(view)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.y = y
                         },
                         completion: {_ in done?()})
         case .fadeRight:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let x = view.frame.origin.x
             let offset = min(view.frame.width, view.frame.height)
-            view.layer.opacity = 0
+            view.alpha = 0
             view.frame.origin.x = view.frame.origin.x + offset
             
             parent.addSubview(view)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.x = x
                         },
                         completion: {_ in done?()})
@@ -167,73 +167,73 @@ public class FUI {
         }
         switch style {
         case .fade:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = 0
+                            view.alpha = 0
                         },
                         completion: {_ in
                             view.removeFromSuperview()
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             done?()
                         })
         case .fadeTop:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let y = view.frame.origin.y
             let offset = min(view.frame.width, view.frame.height)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = 0
+                            view.alpha = 0
                             view.frame.origin.y = view.frame.origin.y - offset
                         },
                         completion: {_ in
                             view.removeFromSuperview()
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.y = y
                             done?()
                         })
         case .fadeLeft:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let x = view.frame.origin.x
             let offset = min(view.frame.width, view.frame.height)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = 0
+                            view.alpha = 0
                             view.frame.origin.x = view.frame.origin.x - offset
                         },
                         completion: {_ in
                             view.removeFromSuperview()
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.x = x
                             done?()
                         })
         case .fadeBottom:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let y = view.frame.origin.y
             let offset = min(view.frame.width, view.frame.height)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = 0
+                            view.alpha = 0
                             view.frame.origin.y = view.frame.origin.y + offset
                         },
                         completion: {_ in
                             view.removeFromSuperview()
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.y = y
                             done?()
                         })
         case .fadeRight:
-            let opacity = view.layer.opacity
+            let alpha = view.alpha
             let x = view.frame.origin.x
             let offset = min(view.frame.width, view.frame.height)
             FUI.animate(with      : with,
                         animations: {
-                            view.layer.opacity = 0
+                            view.alpha = 0
                             view.frame.origin.x = view.frame.origin.x + offset
                         },
                         completion: {_ in
                             view.removeFromSuperview()
-                            view.layer.opacity = opacity
+                            view.alpha = alpha
                             view.frame.origin.x = x
                             done?()
                         })
@@ -402,10 +402,14 @@ public class FUI {
         public func frameScreen() {
             self.frame = UIScreen.main.bounds
         }
-        private var panBagan: CGPoint?
         private var panSpeed: CGFloat! = 1.0
-        public func toGallery(speed: CGFloat = 1.0) {
+        private var panBagan: CGPoint?
+        private var panMove: FBlock?
+        private var panDone: FBlock?
+        public func toGallery(_ speed: CGFloat = 1.0, move: FBlock? = nil, done: FBlock? = nil) {
             self.panSpeed = speed
+            self.panMove = move
+            self.panDone = done
             self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(toGalleryGesture)))
         }
         @objc private func toGalleryGesture(gesture: UIPanGestureRecognizer) {
@@ -429,6 +433,7 @@ public class FUI {
                 if self.frame.origin.y > 0 {
                     self.frame.origin.y = 0
                 }
+                self.panMove?()
             case .ended:
                 var nearestView : UIView? = nil
                 var distance    : CGFloat = CGFloat(MAXFLOAT)
@@ -443,6 +448,7 @@ public class FUI {
                     FUI.animate(FUI.ANIMATION_TIME / 2) {
                         self.frame.origin.x = parent.frame.width / 2 - view.center.x
                         self.frame.origin.y = parent.frame.height / 2 - view.center.y
+                        self.panDone?()
                     }
                 }
             default:
@@ -454,11 +460,11 @@ public class FUI {
     public class FMask: FView {
         required public init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
         
-        init(color: UIColor = .black, opacity: Float = 0) {
+        init(color: UIColor = .black, alpha: CGFloat = 0) {
             super.init(frame: UIScreen.main.bounds)
             
             self.backgroundColor    = color
-            self.layer.opacity      = opacity
+            self.alpha              = alpha
         }
         
     }
@@ -471,12 +477,13 @@ public class FUI {
         
         required public init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
         
-        init(mask: Float = 0.2, rect: Float = 0.4) {
-            super.init(frame: UIScreen.main.bounds)
+        init(mask: CGFloat = 0.2, rect: CGFloat = 0.4) {
+            super.init(frame: CGRect())
+            self.frameScreen()
             
-            self.fmask = FMask(opacity: mask)
+            self.fmask = FMask(alpha: mask)
             self.frect = FView()
-            self.frect.layer.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(rect)).cgColor
+            self.frect.layer.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: rect).cgColor
             self.frect.layer.cornerRadius    = 12
             self.frect.layer.masksToBounds   = true
 
@@ -495,7 +502,7 @@ public class FUI {
             self.frect.center   = self.center
         }
         
-        public func styleActivityIndicator(_ style: UIActivityIndicatorViewStyle = .white) {
+        public func styleActivityIndicator(_ style: UIActivityIndicatorViewStyle = .gray) {
             let indicator = UIActivityIndicatorView(activityIndicatorStyle: style)
             self.willShow({indicator.startAnimating()})
             self.didHide({indicator.stopAnimating()})

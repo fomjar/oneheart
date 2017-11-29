@@ -21,11 +21,11 @@ class ViewLaunch: FUI.FView {
         title.text  = "一  心  一  意"
         title.font  = title.font.withSize(title.frame.height)
         title.textAlignment = .center
-        title.layer.opacity = 0
+        title.alpha = 0
         self.addSubview(title)
         
         self.didShow {
-            title.layer.opacity = 1
+            title.alpha = 1
             FUI.show(title, style: .fadeBottom, with: 1, done: {
                 FUtil.async(1) {
                     ViewMain().show(on: self.superview)
