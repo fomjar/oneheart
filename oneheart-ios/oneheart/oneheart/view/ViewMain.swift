@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ViewMain: FUI.FView {
+class ViewMain: FUI.View {
     
-    private var pack    : FUI.FView!
+    private var pack    : FUI.View!
     private var read    : ViewRead!
     private var write   : ViewWrite!
     private var mine    : ViewMine!

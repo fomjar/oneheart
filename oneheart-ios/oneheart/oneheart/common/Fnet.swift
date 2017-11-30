@@ -8,49 +8,54 @@
 
 import Foundation
 
-public enum Code: Int {
-    case existing_mail      = 0x00001001
-    case existing_name      = 0x00001002
-    case existing_phone     = 0x00001003
-    
-    case signin_failed      = 0x00001101
-    
-    case success                = 0x00000000
-    case sys_illegal_access     = 0xff000001
-    case sys_illegal_resource   = 0xff000002
-    case sys_illegal_argument   = 0xff000003
-    case sys_illegal_message    = 0xff000004
-    case sys_network_fault      = 0xfffffffe
-    case sys_unknown_error      = 0xffffffff
-}
-
 public class FNet {
+
+    public class Code {
+        public static let existing_mail      = 0x00001001
+        public static let existing_name      = 0x00001002
+        public static let existing_phone     = 0x00001003
+        
+        public static let signin_failed      = 0x00001101
+        
+        public static let success                = 0x00000000
+        public static let sys_illegal_access     = 0xff000001
+        public static let sys_illegal_resource   = 0xff000002
+        public static let sys_illegal_argument   = 0xff000003
+        public static let sys_illegal_message    = 0xff000004
+        public static let sys_network_fault      = 0xfffffffe
+        public static let sys_unknown_error      = 0xffffffff
+    }
+
+    public typealias Response = (Int, String, [String:Any]) -> Void
     
+    
+    
+
     private static var server = "http://127.0.0.1:80"
     
     public class func server(host   : String,
                              port   : Int   = 80,
-                             https  : Bool  = false) {
-        FNet.server = "http\(https ? "s" : "")://\(host):\(port)"
+                             ssl    : Bool  = false) {
+        FNet.server = "http\(ssl ? "s" : "")://\(host):\(port)"
     }
     
     public class func get(path      : String,
                           headParam : [String:String] = [:],
-                          done      : ((Code?, String, [String:Any]) -> Void)? = nil) {
+                          done      : Response? = nil) {
         FNet.send(method: "GET", url: FNet.server + path, headParam: headParam, done: done)
     }
     
     public class func post(path     : String,
                            headParam: [String:String] = [:],
                            bodyParam: [String:String] = [:],
-                           done     : ((Code?, String, [String:Any]) -> Void)? = nil) {
+                           done     : Response? = nil) {
         FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, bodyParam: bodyParam, done: done)
     }
     
     public class func post(path     : String,
                            headParam: [String:String] = [:],
                            jsonParam: [String:Any] = [:],
-                           done     : ((Code?, String, [String:Any]) -> Void)? = nil) {
+                           done     : Response? = nil) {
         FNet.send(method: "POST", url: FNet.server + path, headParam: headParam, jsonParam: jsonParam, done: done)
     }
 
@@ -59,7 +64,7 @@ public class FNet {
                             headParam   : [String:String]   = [:],
                             bodyParam   : [String:String]   = [:],
                             jsonParam   : [String:Any]      = [:],
-                            done        : ((Code?, String, [String:Any]) -> Void)? = nil) {
+                            done        : Response? = nil) {
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method
@@ -98,7 +103,7 @@ public class FNet {
                 DispatchQueue.main.async {
                     if let json = try? JSONSerialization.jsonObject(with: data,
                                                                     options: .mutableContainers) as! Dictionary<String, Any> {
-                        done?(Code(rawValue: json["code"] as! Int), json["desc"] as! String, json)
+                        done?(json["code"] as! Int, json["desc"] as! String, json)
                     } else {
                         done?(Code.sys_unknown_error, "unknown error", [:])
                     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewSign: FUI.FView {
+class ViewSign: FUI.View {
     
     private var inTitle : UILabel!
     private var inMail  : UITextField!
@@ -174,7 +174,7 @@ class ViewSign: FUI.FView {
     }
     
     @objc private func submitUp() {
-        let hud = FUI.FHUD()
+        let hud = FUI.HUD()
         hud.styleActivityIndicator()
         hud.show(on: self)
         FNet.post(path: "/user/signup", jsonParam: [
@@ -182,21 +182,19 @@ class ViewSign: FUI.FView {
             "pass" : upPass.text!
         ]) {(code, desc, data) in
             hud.hide()
-            if let code = code {
-                switch code {
-                case Code.success:
-                    Model.user.save(data)
-                    print("注册成功：\(Model.user)")
-                    self.hide(style: .coverBottom)
-                default:
-                    print("注册失败：\(desc)")
-                }
+            switch code {
+            case FNet.Code.success:
+                Model.user.save(data)
+                print("注册成功：\(Model.user)")
+                self.hide(style: .coverBottom)
+            default:
+                print("注册失败：\(desc)")
             }
         }
     }
     
     @objc private func submitIn() {
-        let hud = FUI.FHUD()
+        let hud = FUI.HUD()
         hud.styleActivityIndicator()
         hud.show(on: self)
         FNet.post(path: "/user/signin", jsonParam: [
@@ -204,15 +202,13 @@ class ViewSign: FUI.FView {
             "pass" : inPass.text!
         ]) {(code, desc, data) in
             hud.hide()
-            if let code = code {
-                switch code {
-                case Code.success:
-                    Model.user.save(data)
-                    print("登陆成功：\(Model.user)")
-                    self.hide(style: .coverBottom)
-                default:
-                    print("登陆失败：\(desc)")
-                }
+            switch code {
+            case FNet.Code.success:
+                Model.user.save(data)
+                print("登陆成功：\(Model.user)")
+                self.hide(style: .coverBottom)
+            default:
+                print("登陆失败：\(desc)")
             }
         }
     }

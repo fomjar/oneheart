@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewWrite: FUI.FView {
+class ViewWrite: FUI.View {
     
     private var text    : UITextField!
     private var send    : UIButton!
@@ -35,9 +35,14 @@ class ViewWrite: FUI.FView {
         self.send.center.y = self.text.center.y + 60
         self.send.setTitle("发送", for: .normal)
         self.addSubview(self.send)
+        self.send.addTarget(self, action: #selector(sendIntention), for: .touchUpInside)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.text.resignFirstResponder()
+    }
+    
+    @objc private func sendIntention() {
+        
     }
 }

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewMine: FUI.FView {
+class ViewMine: FUI.View {
+    
+    private var table: UITableViewController!
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
@@ -17,5 +19,7 @@ class ViewMine: FUI.FView {
         self.frameScreen()
         
         self.backgroundColor = UIColor.lightGray
+        
+        table = UITableViewController(style: .plain)
     }
 }

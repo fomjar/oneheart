@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewLaunch: FUI.FView {
+class ViewLaunch: FUI.View {
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
