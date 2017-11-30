@@ -32,7 +32,10 @@ class ViewRead: FUI.View {
                 hud.hide()
                 switch code {
                 case FNet.Code.success:
-                    let intentions = data["intentions"] as Array
+                    let array = data["intentions"] as! Array<[String:Any]>
+                    for item in array {
+                        item.capacity
+                    }
                     print("查询成功")
                 default:
                     print("查询失败：\(desc)")
