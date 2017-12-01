@@ -28,13 +28,16 @@ public interface IntentionMapper {
     int delete(Map<String, Object> cond);
     
     @Select({
-        "select i.*",
-        "  from t_intention i, t_post p",
-        " where i.`invalid` = 0",
-        "   and p.`invalid` = 0",
-        "   and p.`user`    = #{user}",
-        "   and i.`id`      != p.`id`",     // 没收到过的
-        "   and i.`user`    != #{user}",    // 不是自己发的
+        "select *",
+        "  from t_intention",
+        " where `invalid`   = 0",
+        "   and `user`      != #{user}",    // 不是自己发的
+        "   and `id`        not in (",      // 没收到过的
+        "       select `id`",
+        "         from t_post",
+        "        where `invalid`    = 0",
+        "          and `user`       = #{user}",
+        "   )",
         " order by rand()",                 // 随机
         " limit 1"                          // 1条
     })

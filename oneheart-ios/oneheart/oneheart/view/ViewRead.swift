@@ -18,7 +18,8 @@ class ViewRead: FUI.View {
         super.init(frame: CGRect())
         self.frameScreen()
         
-        self.intention = UILabel()
+        self.intention = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width * 0.7, height: self.frame.height * 0.6))
+        self.intention.center = self.center
         self.addSubview(self.intention)
     }
     
@@ -34,8 +35,9 @@ class ViewRead: FUI.View {
                 case FNet.Code.success:
                     let array = data["intentions"] as! Array<[String:Any]>
                     for item in array {
-                        item.capacity
+                        self.intention.text = item["intention"] as? String
                     }
+                    self.intention.adjustsFontSizeToFitWidth = true
                     print("查询成功")
                 default:
                     print("查询失败：\(desc)")
