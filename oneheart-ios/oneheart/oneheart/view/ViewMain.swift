@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import fcore
 
-class ViewMain: FUI.View {
+class ViewMain: fui.View {
     
-    private var pack    : FUI.View!
+    private var pack    : fui.View!
     private var read    : ViewRead!
     private var write   : ViewWrite!
     private var mine    : ViewMine!
@@ -25,7 +26,7 @@ class ViewMain: FUI.View {
         self.write = ViewWrite()
         self.mine = ViewMine()
         
-        self.pack = FUI.packHorizontal([self.mine, self.read, self.write])
+        self.pack = fui.packHorizontal([self.mine, self.read, self.write])
         self.pack.toGallery(2)
         self.pack.frame.origin.x = -self.mine.frame.width
         self.addSubview(self.pack)

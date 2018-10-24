@@ -50,12 +50,12 @@ struct User: Storable {
     }
     
     mutating func save(_ data: [String:Any]) {
-        self.id     = data["id"]        as! Int
+        self.id     = data["id"]        as? Int
         self.state  = UserState(rawValue: data["state"] as! Int)
-        self.mail   = data["mail"]      as! String
+        self.mail   = data["mail"]      as? String
         self.phone  = data["phone"]     as? String
         self.name   = data["name"]      as? String
-        self.pass   = data["pass"]      as! String
+        self.pass   = data["pass"]      as? String
         self.avatar = data["avatar"]    as? String
         
         self.save()

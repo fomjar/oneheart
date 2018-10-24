@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import fcore
 
-class ViewMine: FUI.View {
+class ViewMine: fui.View {
     
     private var table: UITableViewController!
     

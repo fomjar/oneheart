@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import fcore
 
-class ViewSign: FUI.View {
+class ViewSign: fui.View {
     
     private var inTitle : UILabel!
     private var inMail  : UITextField!
@@ -89,11 +90,11 @@ class ViewSign: FUI.View {
 
         NotificationCenter.default.addObserver(self,
                                                selector : #selector(keyboardWillShow),
-                                               name     :NSNotification.Name.UIKeyboardWillShow,
+                                               name     :UIResponder.keyboardWillShowNotification,
                                                object   : nil)
         NotificationCenter.default.addObserver(self,
                                                selector : #selector(keyboardWillHide),
-                                               name     :NSNotification.Name.UIKeyboardWillHide,
+                                               name     :UIResponder.keyboardWillHideNotification,
                                                object   : nil)
         self.inSubmit.addTarget(self, action: #selector(submitIn), for: .touchUpInside)
         self.upSubmit.addTarget(self, action: #selector(submitUp), for: .touchUpInside)
@@ -116,74 +117,74 @@ class ViewSign: FUI.View {
     
     @objc private func keyboardWillShow(n: Notification) {
         let userInfo = n.userInfo! as NSDictionary
-        let value = userInfo.object(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let value = userInfo.object(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
         let height = value.cgRectValue.height
-        FUI.animate {
+        fui.animate {
             self.frame.origin.y = -height
         }
     }
     
     @objc private func keyboardWillHide() {
-        FUI.animate {
+        fui.animate {
             self.frame.origin.y = 0
         }
     }
     
     @objc private func switchToUp() {
         let interval = 0.06
-        FUtil.async(delay: 0, interval: interval, blocks: [
-            {FUI.hide(self.inTitle, style: .fadeLeft)},
-            {FUI.hide(self.inMail, style: .fadeLeft)},
-            {FUI.hide(self.inPass, style: .fadeLeft)},
+        futil.async(delay: 0, interval: interval, blocks: [
+            {fui.hide(self.inTitle, style: .fadeLeft)},
+            {fui.hide(self.inMail, style: .fadeLeft)},
+            {fui.hide(self.inPass, style: .fadeLeft)},
             {
-                FUI.hide(self.inSubmit, style: .fadeLeft)
-                FUI.hide(self.inSwitch, style: .fadeLeft)
+                fui.hide(self.inSubmit, style: .fadeLeft)
+                fui.hide(self.inSwitch, style: .fadeLeft)
             },
         ])
-        FUtil.async(delay: 0.6, interval: interval, blocks: [
-            {FUI.show(self.upTitle, on: self, style: .fadeRight)},
-            {FUI.show(self.upMail, on: self, style: .fadeRight)},
-            {FUI.show(self.upPass, on: self, style: .fadeRight)},
+        futil.async(delay: 0.6, interval: interval, blocks: [
+            {fui.show(self.upTitle, on: self, style: .fadeRight)},
+            {fui.show(self.upMail, on: self, style: .fadeRight)},
+            {fui.show(self.upPass, on: self, style: .fadeRight)},
             {
-                FUI.show(self.upSubmit, on: self, style: .fadeRight)
-                FUI.show(self.upSwitch, on: self, style: .fadeRight)
+                fui.show(self.upSubmit, on: self, style: .fadeRight)
+                fui.show(self.upSwitch, on: self, style: .fadeRight)
             },
         ])
     }
     
     @objc private func switchToIn() {
         let interval = 0.06
-        FUtil.async(delay: 0, interval: interval, blocks: [
-            {FUI.hide(self.upTitle, style: .fadeRight)},
-            {FUI.hide(self.upMail, style: .fadeRight)},
-            {FUI.hide(self.upPass, style: .fadeRight)},
+        futil.async(delay: 0, interval: interval, blocks: [
+            {fui.hide(self.upTitle, style: .fadeRight)},
+            {fui.hide(self.upMail, style: .fadeRight)},
+            {fui.hide(self.upPass, style: .fadeRight)},
             {
-                FUI.hide(self.upSubmit, style: .fadeRight)
-                FUI.hide(self.upSwitch, style: .fadeRight)
+                fui.hide(self.upSubmit, style: .fadeRight)
+                fui.hide(self.upSwitch, style: .fadeRight)
             },
         ])
-        FUtil.async(delay: 0.6, interval: interval, blocks: [
-            {FUI.show(self.inTitle, on: self, style: .fadeLeft)},
-            {FUI.show(self.inMail, on: self, style: .fadeLeft)},
-            {FUI.show(self.inPass, on: self, style: .fadeLeft)},
+        futil.async(delay: 0.6, interval: interval, blocks: [
+            {fui.show(self.inTitle, on: self, style: .fadeLeft)},
+            {fui.show(self.inMail, on: self, style: .fadeLeft)},
+            {fui.show(self.inPass, on: self, style: .fadeLeft)},
             {
-                FUI.show(self.inSubmit, on: self, style: .fadeLeft)
-                FUI.show(self.inSwitch, on: self, style: .fadeLeft)
+                fui.show(self.inSubmit, on: self, style: .fadeLeft)
+                fui.show(self.inSwitch, on: self, style: .fadeLeft)
             },
         ])
     }
     
     @objc private func submitUp() {
-        let hud = FUI.HUD()
+        let hud = fui.HUD()
         hud.styleActivityIndicator()
         hud.show(on: self)
-        FNet.post(path: "/user/signup", jsonParam: [
+        fnet.post(path: "/user/signup", jsonParam: [
             "mail" : upMail.text!,
             "pass" : upPass.text!
         ]) {(code, desc, data) in
             hud.hide()
             switch code {
-            case FNet.Code.success:
+            case fnet.code.success:
                 Model.user.save(data)
                 print("注册成功：\(Model.user)")
                 self.hide(style: .coverBottom)
@@ -194,16 +195,16 @@ class ViewSign: FUI.View {
     }
     
     @objc private func submitIn() {
-        let hud = FUI.HUD()
+        let hud = fui.HUD()
         hud.styleActivityIndicator()
         hud.show(on: self)
-        FNet.post(path: "/user/signin", jsonParam: [
+        fnet.post(path: "/user/signin", jsonParam: [
             "mail" : inMail.text!,
             "pass" : inPass.text!
         ]) {(code, desc, data) in
             hud.hide()
             switch code {
-            case FNet.Code.success:
+            case fnet.code.success:
                 Model.user.save(data)
                 print("登陆成功：\(Model.user)")
                 self.hide(style: .coverBottom)

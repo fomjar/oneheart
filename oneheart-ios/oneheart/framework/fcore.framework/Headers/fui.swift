@@ -1,6 +1,6 @@
 //
-//  Fui.swift
-//  oneheart
+//  fui.swift
+//  fios
 //
 //  Created by fomjar on 2017/11/16.
 //  Copyright © 2017年 fomjar. All rights reserved.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class FUI {
+public class fui {
     
-    public enum Segue {
+    public enum segue {
         case fade
         case fadeTop
         case fadeLeft
@@ -25,12 +25,12 @@ public class FUI {
     public static let ANIMATION_TIME = 0.8
     
     public class func animate(_ with    : Double = ANIMATION_TIME,
-                              animations: @escaping FBlock) {
+                              animations: @escaping fblock) {
         animate(with: with, animations: animations, completion: nil)
     }
 
     public class func animate(with      : Double = ANIMATION_TIME,
-                              animations: @escaping FBlock,
+                              animations: @escaping fblock,
                               completion: ((Bool) -> Void)? = nil) {
         let springDamping   = CGFloat(1)
         let springVelocity  = CGFloat(4)
@@ -47,9 +47,9 @@ public class FUI {
 
     public class func show(_ view   : UIView,
                            on       : UIView?       = nil,
-                           style    : Segue         = .fade,
+                           style    : segue         = .fade,
                            with     : TimeInterval  = ANIMATION_TIME,
-                           done     : FBlock?       = nil) {
+                           done     : fblock?       = nil) {
         let parent = (on ?? view.superview)!
         if 0 == with {
             parent.addSubview(view)
@@ -157,9 +157,9 @@ public class FUI {
     }
     
     public class func hide(_ view   : UIView,
-                           style    : Segue         = .fade,
+                           style    : segue         = .fade,
                            with     : TimeInterval  = ANIMATION_TIME,
-                           done     : FBlock?       = nil) {
+                           done     : fblock?       = nil) {
         let parent = view.superview!
         if 0 == with {
             view.removeFromSuperview()
@@ -361,41 +361,41 @@ public class FUI {
 
     open class View: UIView {
         
-        private var blockWillShow   : [FBlock] = []
-        private var blockDidShow    : [FBlock] = []
-        private var blockWillHide   : [FBlock] = []
-        private var blockDidHide    : [FBlock] = []
+        private var blockWillShow   : [fblock] = []
+        private var blockDidShow    : [fblock] = []
+        private var blockWillHide   : [fblock] = []
+        private var blockDidHide    : [fblock] = []
         
-        public func show(on: UIView? = nil, style: Segue = .fade, with: TimeInterval = ANIMATION_TIME, done: FBlock? = nil) {
-            FUI.show(self, on: on, style: style, with: with, done: {
+        public func show(on: UIView? = nil, style: segue = .fade, with: TimeInterval = ANIMATION_TIME, done: fblock? = nil) {
+            fui.show(self, on: on, style: style, with: with, done: {
                 for block in self.blockDidShow {block()}
                 done?()
             })
             for block in self.blockWillShow {block()}
         }
-        public func hide(style: Segue = .fade, with: TimeInterval = ANIMATION_TIME, done: FBlock? = nil) {
+        public func hide(style: segue = .fade, with: TimeInterval = ANIMATION_TIME, done: fblock? = nil) {
             for block in self.blockWillHide {block()}
-            FUI.hide(self, style: style, with: with, done: {
+            fui.hide(self, style: style, with: with, done: {
                 for block in self.blockDidHide {block()}
                 done?()
             })
         }
-        public func willShow(_ block: FBlock? = nil) {
+        public func willShow(_ block: fblock? = nil) {
             if let block = block {
                 self.blockWillShow.append(block)
             }
         }
-        public func didShow(_ block: FBlock? = nil) {
+        public func didShow(_ block: fblock? = nil) {
             if let block = block {
                 self.blockDidShow.append(block)
             }
         }
-        public func willHide(_ block: FBlock? = nil) {
+        public func willHide(_ block: fblock? = nil) {
             if let block = block {
                 self.blockWillHide.append(block)
             }
         }
-        public func didHide(_ block: FBlock? = nil) {
+        public func didHide(_ block: fblock? = nil) {
             if let block = block {
                 self.blockDidHide.append(block)
             }
@@ -405,9 +405,9 @@ public class FUI {
         }
         private var panSpeed: CGFloat! = 1.0
         private var panBagan: CGPoint?
-        private var panMove: FBlock?
-        private var panDone: FBlock?
-        public func toGallery(_ speed: CGFloat = 1.0, move: FBlock? = nil, done: FBlock? = nil) {
+        private var panMove: fblock?
+        private var panDone: fblock?
+        public func toGallery(_ speed: CGFloat = 1.0, move: fblock? = nil, done: fblock? = nil) {
             self.panSpeed = speed
             self.panMove = move
             self.panDone = done
@@ -446,7 +446,7 @@ public class FUI {
                     }
                 }
                 if let view = nearestView {
-                    FUI.animate(ANIMATION_TIME / 2) {
+                    fui.animate(ANIMATION_TIME / 2) {
                         self.frame.origin.x = parent.frame.width / 2 - view.center.x
                         self.frame.origin.y = parent.frame.height / 2 - view.center.y
                         self.panDone?()
@@ -470,15 +470,15 @@ public class FUI {
         
     }
     
-    open class HUD: View {
+    public class HUD: View {
         
-        open var fmask  : Mask!
-        open var frect  : View!
-        open var fpack  : View?
+        public var fmask  : Mask!
+        public var frect  : View!
+        public var fpack  : View?
         
         required public init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
         
-        init(mask: CGFloat = 0.2, rect: CGFloat = 0.4) {
+        public init(mask: CGFloat = 0.2, rect: CGFloat = 0.4) {
             super.init(frame: CGRect())
             self.frameScreen()
             
@@ -503,8 +503,8 @@ public class FUI {
             self.frect.center   = self.center
         }
         
-        public func styleActivityIndicator(_ style: UIActivityIndicatorViewStyle = .gray) {
-            let indicator = UIActivityIndicatorView(activityIndicatorStyle: style)
+        public func styleActivityIndicator(_ style: UIActivityIndicatorView.Style = .gray) {
+            let indicator = UIActivityIndicatorView(style: style)
             self.willShow({indicator.startAnimating()})
             self.didHide({indicator.stopAnimating()})
             

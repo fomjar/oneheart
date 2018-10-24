@@ -1,0 +1,11 @@
+framework module fcore {
+  umbrella header "fcore.h"
+
+  export *
+  module * { export * }
+}
+
+module fcore.Swift {
+    header "fcore-Swift.h"
+    requires objc
+}

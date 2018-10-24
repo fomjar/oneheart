@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import fcore
 
-class ViewRead: FUI.View {
+class ViewRead: fui.View {
     
     private var intention   : UILabel!
 
@@ -24,15 +25,15 @@ class ViewRead: FUI.View {
     }
     
     func read() {
-        let hud = FUI.HUD(mask: 0, rect: 0)
+        let hud = fui.HUD(mask: 0, rect: 0)
         hud.styleActivityIndicator()
         hud.show(on: self)
-        FNet.post(path: "/intention/read", jsonParam: [
+        fnet.post(path: "/intention/read", jsonParam: [
             "user" : Model.user.id,
             ]) {(code, desc, data) in
                 hud.hide()
                 switch code {
-                case FNet.Code.success:
+                case fnet.code.success:
                     let array = data["intentions"] as! Array<[String:Any]>
                     for item in array {
                         self.intention.text = item["intention"] as? String

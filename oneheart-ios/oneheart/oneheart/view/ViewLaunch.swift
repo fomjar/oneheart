@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import fcore
 
-class ViewLaunch: FUI.View {
+class ViewLaunch: fui.View {
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
@@ -26,8 +27,8 @@ class ViewLaunch: FUI.View {
         
         self.didShow {
             title.alpha = 1
-            FUI.show(title, style: .fadeBottom, with: 1, done: {
-                FUtil.async(1) {
+            fui.show(title, style: .fadeBottom, with: 1, done: {
+                futil.async(1) {
                     ViewMain().show(on: self.superview)
                     self.hide()
                 }

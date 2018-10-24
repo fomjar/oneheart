@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import fcore
 
-class ViewWrite: FUI.View {
+class ViewWrite: fui.View {
     
     private var text    : UITextField!
     private var send    : UIButton!
